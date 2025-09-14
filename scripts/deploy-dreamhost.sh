@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Dreamhost SSH Deployment Script
-# This scri    echo -e "${YELLOW}Running navigation tests...${NC}"
-    if ../scripts/navigation-test.sh; then deploys your personal homepage to Dreamhost via SSH
+# This script deploys your personal homepage to Dreamhost via SSH
 
 # Configuration - Load from environment file if it exists
 ENV_FILE="../.env.deploy"
