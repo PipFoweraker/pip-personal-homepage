@@ -1,0 +1,21 @@
+# Files and directories to exclude from deployment
+.git/
+.gitignore
+node_modules/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+scripts/deploy-dreamhost.sh
+scripts/link-audit.sh
+deploy-exclude.txt
+README.md
+CONTRIBUTING.md
+*.md
+.vscode/
+.idea/
+*.tmp
+*.temp
+backup-*
+*.tar.gz
