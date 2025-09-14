@@ -1,0 +1,109 @@
+/* lab-config.css - Lab-themed UI components, colors, effects */
+
+/* Panels */
+.lab-panel {
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.4);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: box-shadow 0.2s;
+}
+.lab-panel:hover {
+  box-shadow: 0 4px 24px 0 var(--primary);
+}
+
+/* Buttons */
+.lab-btn {
+  background: var(--button-bg);
+  color: var(--text);
+  border: 1.5px solid var(--primary);
+  border-radius: 6px;
+  padding: 0.6em 1.2em;
+  font-family: inherit;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  margin: 0.5em 0;
+}
+.lab-btn:hover, .lab-btn:focus {
+  background: var(--button-hover);
+  color: var(--background);
+  border-color: var(--accent);
+}
+
+/* Disabled button style for lab-button */
+.lab-button[disabled], .lab-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* Status indicators */
+.status {
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: bold;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+.status.legendary {
+  background: var(--legendary);
+  color: #222;
+}
+.status.rare {
+  background: var(--rare);
+  color: #222;
+}
+
+/* Popups/Modals */
+.lab-popup {
+  background: var(--popup-bg);
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.7);
+  padding: 2rem;
+  color: var(--text);
+  max-width: 500px;
+  margin: 2rem auto;
+  position: relative;
+  z-index: 100;
+}
+
+/* Navigation */
+.lab-nav {
+  display: flex;
+  gap: 1.5rem;
+  background: var(--panel);
+  border-bottom: 2px solid var(--primary);
+  padding: 0.7em 1.2em;
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 2rem;
+}
+.lab-nav a {
+  color: var(--primary);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  padding: 0.3em 0.7em;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.lab-nav a.active, .lab-nav a:hover {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .lab-panel {
+    padding: 1em;
+  }
+  .lab-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5em 0.7em;
+  }
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pip Foweraker - Personal Homepage</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="Pip Foweraker - Personal Homepage" />
+    <meta property="og:description" content="Developer, researcher, and digital craftsperson. AI safety, games, essays, and more." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pipfoweraker.com/" />
+    <meta property="og:image" content="https://pipfoweraker.com/assets/lab-og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pip Foweraker - Personal Homepage" />
+    <meta name="twitter:description" content="Developer, researcher, and digital craftsperson. AI safety, games, essays, and more." />
+    <meta name="twitter:image" content="https://pipfoweraker.com/assets/lab-og-image.png" />
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header/Navigation -->
+        <header class="lab-header">
+            <div class="header-content">
+                <h1 class="lab-title">Pip Foweraker</h1>
+                <p class="lab-subtitle">Developer • Researcher • Digital Craftsperson</p>
+            </div>
+            <nav class="lab-nav">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="blog/index.html" class="nav-link">Blog</a>
+                <a href="gallery/index.html" class="nav-link">Gallery</a>
+                <a href="library.html" class="nav-link">Reference Library</a>
+                <a href="memes.html" class="nav-link">Memes</a>
+                <a href="aphorisms.html" class="nav-link">Aphorisms</a>
+                <a href="drafts.html" class="nav-link">Drafts</a>
+                <a href="readlist.html" class="nav-link">Read/Follow List</a>
+                <a href="whitelist.html" class="nav-link">Whitelist</a>
+                <a href="blacklist.html" class="nav-link">Blacklist</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="lab-main">
+            <!-- Home Section -->
+            <section id="home" class="content-section active">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Welcome to the Lab</h2>
+                        <div class="status-indicator status-online"></div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="intro-grid">
+                            <div class="intro-text">
+                                <p>Welcome to my digital workspace. I'm a developer and researcher exploring the intersection of technology, creativity, and human systems.</p>
+                                <p>Currently working on AI safety research, game development, and various experimental projects that push the boundaries of what's possible with code.</p>
+                            </div>
+                            <div class="status-panel">
+                                <h3>Current Status</h3>
+                                <div class="status-item">
+                                    <span class="status-label">Project:</span>
+                                    <span class="status-value legendary">P(DOOM) Research</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Mode:</span>
+                                    <span class="status-value rare">Development</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Location:</span>
+                                    <span class="status-value">The Lab</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Recent Activity</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="activity-feed">
+                            <div class="activity-item rarity-legendary">
+                                <div class="activity-time">2025-09-14</div>
+                                <div class="activity-desc">Released pdoom-data v1.0.0 - Complete development infrastructure</div>
+                            </div>
+                            <div class="activity-item rarity-rare">
+                                <div class="activity-time">2025-09-13</div>
+                                <div class="activity-desc">Implemented cross-repo integration system</div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-time">2025-09-12</div>
+                                <div class="activity-desc">Blog system architecture complete</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Blog Section -->
+            <section id="blog" class="content-section">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Development Blog</h2>
+                        <div class="panel-controls">
+                            <button class="lab-button" disabled title="Filtering coming soon">All</button>
+                            <button class="lab-button" disabled title="Filtering coming soon">Technical</button>
+                            <button class="lab-button" disabled title="Filtering coming soon">Research</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div id="blog-posts" class="blog-grid">
+                            <article class="blog-post" data-category="technical">
+                                <div class="post-header">
+                                    <h3 class="post-title">Building a Personal Homepage</h3>
+                                    <div class="post-meta">
+                                        <span class="post-date">2025-09-14</span>
+                                        <span class="post-category technical">Technical</span>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <p>Creating a static site that I can update quickly while building something more substantial. Using design elements from my game projects to create a cohesive digital presence.</p>
+                                </div>
+                                <div class="post-footer">
+                                    <a href="blog/building-personal-homepage.html" class="read-more">Read More</a>
+                                </div>
+                            </article>
+
+                            <article class="blog-post" data-category="research">
+                                <div class="post-header">
+                                    <h3 class="post-title">P(DOOM) Data Architecture</h3>
+                                    <div class="post-meta">
+                                        <span class="post-date">2025-09-13</span>
+                                        <span class="post-category research">Research</span>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <p>Exploring historical events in AI safety through structured data and cross-repository integration patterns.</p>
+                                </div>
+                                <div class="post-footer">
+                                    <a href="blog/pdoom-data-architecture.html" class="read-more">Read More</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section id="gallery" class="content-section">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Digital Gallery</h2>
+                        <div class="panel-controls">
+                            <button class="lab-button" disabled title="Filtering coming soon">All</button>
+                            <button class="lab-button" disabled title="Filtering coming soon">Code Art</button>
+                            <button class="lab-button" disabled title="Filtering coming soon">UI Design</button>
+                            <button class="lab-button" disabled title="Filtering coming soon">Data Viz</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div id="gallery-grid" class="gallery-grid">
+                            <div class="gallery-item" data-category="ui">
+                                <div class="item-preview">
+                                    <div class="preview-placeholder">
+                                        <span>Lab Config UI</span>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h4>Game UI Design</h4>
+                                    <p>Dark theme interface with color-coded status indicators</p>
+                                </div>
+                            </div>
+                            
+                            <div class="gallery-item" data-category="data">
+                                <div class="item-preview">
+                                    <div class="preview-placeholder">
+                                        <span>Event Timeline</span>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h4>Historical Event Visualization</h4>
+                                    <p>Interactive timeline with filtering and categorization</p>
+                                </div>
+                            </div>
+
+                            <div class="gallery-item" data-category="code">
+                                <div class="item-preview">
+                                    <div class="preview-placeholder">
+                                        <span>Code Structure</span>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h4>Cross-Repo Architecture</h4>
+                                    <p>Modular system design for data integration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Section -->
+            <section id="code" class="content-section">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Code Projects</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="projects-grid">
+                            <div class="project-card rarity-legendary">
+                                <div class="project-header">
+                                    <h3>pdoom-data</h3>
+                                    <div class="project-status status-active">Active</div>
+                                </div>
+                                <div class="project-content">
+                                    <p>Comprehensive AI safety historical events database with cross-repository integration system.</p>
+                                    <div class="tech-tags">
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">JSON</span>
+                                        <span class="tech-tag">Data Architecture</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/PipFoweraker/pdoom-data" class="project-link">GitHub</a>
+                                    <a href="#" class="project-link">Documentation</a>
+                                </div>
+                            </div>
+
+                            <div class="project-card rarity-rare">
+                                <div class="project-header">
+                                    <h3>Personal Homepage</h3>
+                                    <div class="project-status status-development">Development</div>
+                                </div>
+                                <div class="project-content">
+                                    <p>Static website with lab-themed UI design. Fast to update, easy to deploy.</p>
+                                    <div class="tech-tags">
+                                        <span class="tech-tag">HTML5</span>
+                                        <span class="tech-tag">CSS3</span>
+                                        <span class="tech-tag">JavaScript</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">GitHub</a>
+                                    <a href="#" class="project-link">Live Site</a>
+                                </div>
+                            </div>
+
+                            <div class="project-card">
+                                <div class="project-header">
+                                    <h3>Game Integration System</h3>
+                                    <div class="project-status status-planning">Planning</div>
+                                </div>
+                                <div class="project-content">
+                                    <p>Cross-platform integration between data repositories and game engines.</p>
+                                    <div class="tech-tags">
+                                        <span class="tech-tag">Python</span>
+                                        <span class="tech-tag">Pygame</span>
+                                        <span class="tech-tag">API Design</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Essays Section -->
+            <section id="essays" class="content-section">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Personal Essays</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="essays-list">
+                            <article class="essay-item">
+                                <div class="essay-header">
+                                    <h3>On Building Digital Systems</h3>
+                                    <span class="essay-date">2025-09-14</span>
+                                </div>
+                                <div class="essay-preview">
+                                    <p>Thoughts on creating robust, maintainable systems that serve both human needs and technical requirements...</p>
+                                </div>
+                                <a href="essays/building-digital-systems.html" class="essay-link">Read Essay</a>
+                            </article>
+
+                            <article class="essay-item">
+                                <div class="essay-header">
+                                    <h3>The Art of Code Documentation</h3>
+                                    <span class="essay-date">2025-09-12</span>
+                                </div>
+                                <div class="essay-preview">
+                                    <p>Documentation as a form of communication and future-proofing. Why ASCII compliance matters...</p>
+                                </div>
+                                <a href="essays/code-documentation.html" class="essay-link">Read Essay</a>
+                            </article>
+
+                            <article class="essay-item">
+                                <div class="essay-header">
+                                    <h3>Working in Public</h3>
+                                    <span class="essay-date">2025-09-10</span>
+                                </div>
+                                <div class="essay-preview">
+                                    <p>The benefits and challenges of developing projects in the open. Building in public as a learning tool...</p>
+                                </div>
+                                <a href="essays/working-in-public.html" class="essay-link">Read Essay</a>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <div class="lab-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">About the Lab</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="about-grid">
+                            <div class="about-text">
+                                <h3>Who I Am</h3>
+                                <p>I'm Pip, a developer and researcher working at the intersection of technology and human systems. I build tools, explore ideas, and document the process along the way.</p>
+                                
+                                <h3>What I Do</h3>
+                                <p>My work focuses on creating robust systems for complex problems, with particular interest in AI safety research, game development, and experimental software architecture.</p>
+                                
+                                <h3>How I Work</h3>
+                                <p>I believe in building in public, thorough documentation, and creating systems that are both functional and maintainable. All my projects prioritize clarity and long-term sustainability.</p>
+                            </div>
+                            
+                            <div class="contact-panel">
+                                <h3>Contact & Links</h3>
+                                <div class="contact-links">
+                                    <a href="https://github.com/PipFoweraker" class="contact-link">
+                                        <span class="link-label">GitHub</span>
+                                        <span class="link-value">@PipFoweraker</span>
+                                    </a>
+                                    <a href="mailto:pip@example.com" class="contact-link">
+                                        <span class="link-label">Email</span>
+                                        <span class="link-value">Contact</span>
+                                    </a>
+                                    <div class="contact-link">
+                                        <span class="link-label">Location</span>
+                                        <span class="link-value">The Lab</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="lab-stats">
+                                    <h4>Lab Statistics</h4>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Active Projects:</span>
+                                        <span class="stat-value">3</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Lines of Code:</span>
+                                        <span class="stat-value">∞</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Coffee Consumed:</span>
+                                        <span class="stat-value">Significant</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="lab-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Pip Foweraker. Built with intention, deployed with care.<br>
+                Content is <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a> unless noted. Code is MIT Licensed.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/PipFoweraker/pip-personal-homepage">Source Code</a>
+                    <span class="separator">•</span>
+                    <a href="#" onclick="showSystemInfo()">System Info</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

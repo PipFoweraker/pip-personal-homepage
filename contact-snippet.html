@@ -1,0 +1,15 @@
+<!-- Safe Contact: Obfuscated Email Example -->
+<div class="contact-panel lab-panel">
+  <h2>Contact</h2>
+  <p>To contact me, please email: <span id="email-obf"></span></p>
+</div>
+<script>
+// Simple JS obfuscation
+(function(){
+  var user = 'pip';
+  var domain = 'example.com';
+  var email = user + '@' + domain;
+  document.getElementById('email-obf').innerHTML = '<a href="mailto:' + email + '">' + email + '</a>';
+})();
+</script>
+<!-- Place this snippet in your about or contact page. -->

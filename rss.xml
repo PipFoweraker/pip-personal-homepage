@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Pip Foweraker - Blog & Essays</title>
+    <link>https://pipfoweraker.com/</link>
+    <description>Updates, essays, and research from Pip Foweraker's digital lab.</description>
+    <language>en-us</language>
+    <item>
+      <title>Building a Personal Homepage</title>
+      <link>https://pipfoweraker.com/blog/building-personal-homepage.html</link>
+      <description>Creating a static site that I can update quickly while building something more substantial. Using design elements from my game projects to create a cohesive digital presence.</description>
+      <pubDate>Sun, 14 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://pipfoweraker.com/blog/building-personal-homepage.html</guid>
+    </item>
+    <item>
+      <title>P(DOOM) Data Architecture</title>
+      <link>https://pipfoweraker.com/blog/pdoom-data-architecture.html</link>
+      <description>Exploring historical events in AI safety through structured data and cross-repository integration patterns.</description>
+      <pubDate>Sat, 13 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://pipfoweraker.com/blog/pdoom-data-architecture.html</guid>
+    </item>
+    <item>
+      <title>On Building Digital Systems</title>
+      <link>https://pipfoweraker.com/essays/building-digital-systems.html</link>
+      <description>Thoughts on creating robust, maintainable systems that serve both human needs and technical requirements...</description>
+      <pubDate>Sun, 14 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://pipfoweraker.com/essays/building-digital-systems.html</guid>
+    </item>
+    <item>
+      <title>The Art of Code Documentation</title>
+      <link>https://pipfoweraker.com/essays/code-documentation.html</link>
+      <description>Documentation as a form of communication and future-proofing. Why ASCII compliance matters...</description>
+      <pubDate>Fri, 12 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://pipfoweraker.com/essays/code-documentation.html</guid>
+    </item>
+    <item>
+      <title>Working in Public</title>
+      <link>https://pipfoweraker.com/essays/working-in-public.html</link>
+      <description>The benefits and challenges of developing projects in the open. Building in public as a learning tool...</description>
+      <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://pipfoweraker.com/essays/working-in-public.html</guid>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,11 @@
+/* humans.txt for pip-personal-homepage */
+
+Team: Pip Foweraker (pip@example.com)
+Site: pipfoweraker.com
+Role: Developer, Researcher, Digital Craftsperson
+
+Thanks: Open source contributors, the AI safety community, and all visitors.
+
+Standards: HTML5, CSS3, JavaScript, Creative Commons, MIT License
+
+Last update: 2025-09-14
