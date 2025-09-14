@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Memes Library</title>
+  <title>Reference Library</title>
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/lab-config.css">
 </head>
@@ -19,8 +19,8 @@
       <a href="blog/index.html">Blog</a>
       <a href="projects.html">Projects</a>
       <a href="essays.html">Essays</a>
-      <a href="library.html">Library</a>
-      <a href="memes.html" class="current">Memes</a>
+      <a href="library.html" class="current">Library</a>
+      <a href="memes.html">Memes</a>
       <a href="aphorisms.html">Aphorisms</a>
       <a href="drafts.html">Drafts</a>
       <a href="photos.html" class="disabled">Photos</a>
@@ -29,22 +29,22 @@
   </nav>
   <div class="container">
     <div class="lab-panel">
-      <h1>Memes Library</h1>
-      <p>Personal collection organized by topic. Click categories to browse.</p>
+      <h1>Reference Library</h1>
+      <p>Personal collection index - papers, books, and resources worth sharing.</p>
       
-      <div id="memes-container" class="memes-gallery">
-        <!-- Content will be loaded dynamically from data/memes.json -->
+      <div id="library-container" class="library-sections">
+        <!-- Content will be loaded dynamically from data/library.json -->
       </div>
     </div>
   </div>
   
   <script src="scripts/data-loader.js"></script>
   <script>
-    // Load and render memes
+    // Load and render library content
     document.addEventListener('DOMContentLoaded', async () => {
-      const data = await window.DataSystem.dataManager.loadData('memes');
-      if (data && data.memes) {
-        window.DataSystem.renderer.renderMemes(data.memes, 'memes-container');
+      const data = await window.DataSystem.dataManager.loadData('library');
+      if (data && data.library) {
+        window.DataSystem.renderer.renderLibrary(data.library, 'library-container');
       }
     });
   </script>
