@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Pip's Lab</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/lab-config.css">
+    <link rel="stylesheet" href="../styles/data-content.css">
+</head>
+<body>
+  <nav class="lab-nav">
+    <div class="nav-brand">
+      <a href="../index.html">pip@localhost:~$</a>
+    </div>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="index.html" class="current">Blog</a>
+      <a href="../essays.html">Essays</a>
+      <a href="../library.html">Library</a>
+      <a href="../memes.html">Memes</a>
+      <a href="../aphorisms.html">Aphorisms</a>
+      <a href="../drafts.html">Drafts</a>
+      <a href="../photos.html" class="disabled">Photos</a>
+      <a href="../art.html" class="disabled">Art</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="lab-panel">
+      <h1>Development Blog</h1>
+      <p>Technical posts, project updates, and development insights.</p>
+      
+      <div id="blog-posts" class="blog-posts-archive">
+        <!-- Content will be loaded dynamically from data/blog.json -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="../scripts/data-loader.js"></script>
+  <script>
+    // Load and render all blog posts
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await window.DataSystem.dataManager.loadData('blog');
+      if (data && data.blog_posts) {
+        // Show all published posts, not just recent ones
+        const publishedPosts = data.blog_posts.filter(post => post.status === 'published');
+        window.DataSystem.renderer.renderBlogPosts(publishedPosts, 'blog-posts');
+      }
+    });
+  </script>
+</body>
+</html>
