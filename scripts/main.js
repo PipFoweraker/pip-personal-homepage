@@ -24,10 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   navLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').replace('#', '');
-      showSection(targetId);
-      history.replaceState(null, '', '#' + targetId);
+      const href = this.getAttribute('href');
+      
+      // Only intercept anchor links (starting with #), let page links work normally
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.replace('#', '');
+        showSection(targetId);
+        history.replaceState(null, '', href);
+      }
+      // For regular page links (like memes.html), let them work normally - don't preventDefault
     });
   });
 
