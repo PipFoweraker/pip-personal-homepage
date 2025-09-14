@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCT    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+    <link rel="stylesheet" href="styles/data-content.css">E html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,32 +28,21 @@
       <h1>Memes Library</h1>
       <p>Personal collection organized by topic. Click categories to browse.</p>
       
-      <div class="meme-categories">
-        <div class="category-card" data-category="coding">
-          <h3>Coding Memes</h3>
-          <p>Programming humor, bugs, and dev life</p>
-          <span class="count">0 memes</span>
-        </div>
-        
-        <div class="category-card" data-category="internet-culture">
-          <h3>Internet Culture</h3>
-          <p>Classic memes and online phenomena</p>
-          <span class="count">0 memes</span>
-        </div>
-        
-        <div class="category-card" data-category="political">
-          <h3>Political</h3>
-          <p>Political commentary and satire</p>
-          <span class="count">0 memes</span>
-        </div>
-        
-        <div class="category-card" data-category="absurd">
-          <h3>Absurd</h3>
-          <p>Surreal and weird content</p>
-          <span class="count">0 memes</span>
-        </div>
+      <div id="memes-container" class="memes-gallery">
+        <!-- Content will be loaded dynamically from data/memes.json -->
       </div>
     </div>
   </div>
+  
+  <script src="scripts/data-loader.js"></script>
+  <script>
+    // Load and render memes
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await window.DataSystem.dataManager.loadData('memes');
+      if (data && data.memes) {
+        window.DataSystem.renderer.renderMemes(data.memes, 'memes-container');
+      }
+    });
+  </script>
 </body>
 </html>

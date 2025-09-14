@@ -1,0 +1,22 @@
+{
+  "drafts": [
+    {
+      "id": 1,
+      "title": "**PLACEHOLDER CONTENT**",
+      "date": "2023-07-15",
+      "epistemic_status": "low",
+      "completion_status": "15%",
+      "preview": "**PLACEHOLDER CONTENT**",
+      "tags": ["placeholder"]
+    },
+    {
+      "id": 2,
+      "title": "**PLACEHOLDER CONTENT**",
+      "date": "2024-02-20",
+      "epistemic_status": "medium", 
+      "completion_status": "40%",
+      "preview": "**PLACEHOLDER CONTENT**",
+      "tags": ["placeholder"]
+    }
+  ]
+}

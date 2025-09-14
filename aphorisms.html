@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCT    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+    <link rel="stylesheet" href="styles/data-content.css">E html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,25 +28,21 @@
       <h1>Aphorisms & Thoughts</h1>
       <p>Short thoughts, useful strings, and collected wisdom.</p>
       
-      <div class="aphorisms-stream">
-        <div class="aphorism-block">
-          <p>"The best code is no code. The second best code is code that works and you never have to touch again."</p>
-          <span class="aphorism-date">2025-09-14</span>
-        </div>
-        
-        <div class="aphorism-block">
-          <p>"Documentation is a love letter to your future self."</p>
-          <span class="aphorism-date">2025-09-14</span>
-        </div>
-        
-        <div class="aphorism-block">
-          <p>"Build in public, fail in private, learn everywhere."</p>
-          <span class="aphorism-date">2025-09-14</span>
-        </div>
-        
-        <!-- Add more aphorisms here -->
+      <div id="aphorisms-container" class="aphorisms-stream">
+        <!-- Content will be loaded dynamically from data/aphorisms.json -->
       </div>
     </div>
   </div>
+  
+  <script src="scripts/data-loader.js"></script>
+  <script>
+    // Load and render aphorisms
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await window.DataSystem.dataManager.loadData('aphorisms');
+      if (data && data.aphorisms) {
+        window.DataSystem.renderer.renderAphorisms(data.aphorisms, 'aphorisms-container');
+      }
+    });
+  </script>
 </body>
 </html>

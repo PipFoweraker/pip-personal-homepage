@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCT    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+    <link rel="stylesheet" href="styles/data-content.css">E html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,38 +28,21 @@
       <h1>Drafts & Mistakes</h1>
       <p>Unfinished ideas and low-epistemic-confidence thoughts. Timestamped for idea-space claims.</p>
       
-      <div class="drafts-stream">
-        <div class="draft-item">
-          <div class="draft-header">
-            <h3>AI Safety Governance Framework</h3>
-            <div class="draft-meta">
-              <span class="draft-date">2023-07-15</span>
-              <span class="epistemic-status low">Low Confidence</span>
-              <span class="completion-status">15% Complete</span>
-            </div>
-          </div>
-          <div class="draft-preview">
-            <p>Rough framework for evaluating AI safety governance approaches across different scales...</p>
-          </div>
-        </div>
-        
-        <div class="draft-item">
-          <div class="draft-header">
-            <h3>Cross-Repository Integration Patterns</h3>
-            <div class="draft-meta">
-              <span class="draft-date">2024-02-20</span>
-              <span class="epistemic-status medium">Medium Confidence</span>
-              <span class="completion-status">40% Complete</span>
-            </div>
-          </div>
-          <div class="draft-preview">
-            <p>Design patterns for maintaining consistency across multiple related repositories...</p>
-          </div>
-        </div>
-        
-        <!-- Add more drafts here -->
+      <div id="drafts-container" class="drafts-stream">
+        <!-- Content will be loaded dynamically from data/drafts.json -->
       </div>
     </div>
   </div>
+  
+  <script src="scripts/data-loader.js"></script>
+  <script>
+    // Load and render drafts
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await window.DataSystem.dataManager.loadData('drafts');
+      if (data && data.drafts) {
+        window.DataSystem.renderer.renderDrafts(data.drafts, 'drafts-container');
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,291 @@
+/* Additional styles for data-driven content */
+
+.placeholder {
+    opacity: 0.6;
+    font-style: italic;
+}
+
+.placeholder::after {
+    content: " (placeholder)";
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* Aphorisms */
+.aphorism-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 255, 128, 0.05);
+    border-left: 3px solid var(--accent-green);
+    border-radius: 0 8px 8px 0;
+}
+
+.aphorism-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+    padding: 0;
+    border: none;
+    quotes: '"' '"' ''' ''';
+}
+
+.aphorism-text::before {
+    content: open-quote;
+}
+
+.aphorism-text::after {
+    content: close-quote;
+}
+
+.aphorism-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.epistemic-status {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa500;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+/* Drafts and Essays */
+.draft-item, .essay-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 128, 0.2);
+}
+
+.draft-title, .essay-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-green);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.draft-description, .essay-item p {
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.draft-meta, .essay-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.status-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-draft {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa500;
+}
+
+.status-published {
+    background: rgba(0, 255, 128, 0.2);
+    color: var(--accent-green);
+}
+
+.status-idea {
+    background: rgba(128, 128, 128, 0.2);
+    color: #ccc;
+}
+
+.completion {
+    background: rgba(0, 162, 255, 0.2);
+    color: #00a2ff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+/* Library items */
+.library-section {
+    margin-bottom: 3rem;
+}
+
+.library-section h3 {
+    color: var(--accent-green);
+    border-bottom: 2px solid var(--accent-green);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.library-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-blue);
+}
+
+.library-item h4 {
+    margin: 0 0 0.5rem 0;
+}
+
+.library-item h4 a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.library-item h4 a:hover {
+    text-decoration: underline;
+}
+
+.library-item p {
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.library-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+/* Memes */
+.meme-item {
+    margin-bottom: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meme-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.meme-info {
+    padding: 1rem;
+}
+
+.meme-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--accent-green);
+}
+
+.meme-info p {
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+}
+
+.meme-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.source {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+/* Blog posts */
+.blog-post {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-green);
+}
+
+.blog-post h2 {
+    margin: 0 0 1rem 0;
+}
+
+.blog-post h2 a {
+    color: var(--accent-green);
+    text-decoration: none;
+}
+
+.blog-post h2 a:hover {
+    text-decoration: underline;
+}
+
+.post-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+.post-description {
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8em;
+    text-transform: lowercase;
+}
+
+/* Date styling */
+.date {
+    color: #999;
+    font-size: 0.9em;
+}
+
+.word-count {
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .aphorism-meta,
+    .draft-meta,
+    .essay-meta,
+    .library-meta,
+    .meme-meta,
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .tags {
+        width: 100%;
+    }
+}

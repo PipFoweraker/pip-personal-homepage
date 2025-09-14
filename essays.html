@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essays - Pip's Lab</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+    <link rel="stylesheet" href="styles/data-content.css">
+</head>
+<body>
+  <nav class="lab-nav">
+    <div class="nav-brand">
+      <a href="index.html">pip@localhost:~$</a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="essays.html" class="current">Essays</a>
+      <a href="library.html">Library</a>
+      <a href="memes.html">Memes</a>
+      <a href="aphorisms.html">Aphorisms</a>
+      <a href="drafts.html">Drafts</a>
+      <a href="photos.html" class="disabled">Photos</a>
+      <a href="art.html" class="disabled">Art</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="lab-panel">
+      <h1>Essays</h1>
+      <p>Longer-form writing and analysis on topics of interest.</p>
+      
+      <div id="essays-container" class="essays-stream">
+        <!-- Content will be loaded dynamically from data/essays.json -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="scripts/data-loader.js"></script>
+  <script>
+    // Load and render essays
+    document.addEventListener('DOMContentLoaded', async () => {
+      const data = await window.DataSystem.dataManager.loadData('essays');
+      if (data && data.essays) {
+        window.DataSystem.renderer.renderEssays(data.essays, 'essays-container');
+      }
+    });
+  </script>
+</body>
+</html>

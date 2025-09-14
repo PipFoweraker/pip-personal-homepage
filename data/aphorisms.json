@@ -1,0 +1,16 @@
+{
+  "aphorisms": [
+    {
+      "id": 1,
+      "text": "**PLACEHOLDER CONTENT**",
+      "date": "2025-09-14",
+      "tags": ["placeholder"]
+    },
+    {
+      "id": 2,
+      "text": "**PLACEHOLDER CONTENT**",
+      "date": "2025-09-14", 
+      "tags": ["placeholder"]
+    }
+  ]
+}

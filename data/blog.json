@@ -1,0 +1,26 @@
+{
+  "blog_posts": [
+    {
+      "id": 1,
+      "title": "Building a Personal Homepage: A Lab-Themed Journey",
+      "slug": "building-personal-homepage",
+      "date": "2025-09-14",
+      "author": "Pip",
+      "description": "Documenting the process of creating a personal homepage with a lab-themed design.",
+      "status": "published",
+      "tags": ["web-development", "design", "personal"],
+      "file_path": "blog/building-personal-homepage.html"
+    },
+    {
+      "id": 2,
+      "title": "**PLACEHOLDER CONTENT**",
+      "slug": "placeholder-post",
+      "date": "2025-09-14",
+      "author": "Pip",
+      "description": "**PLACEHOLDER CONTENT**",
+      "status": "draft",
+      "tags": ["placeholder"],
+      "file_path": null
+    }
+  ]
+}
