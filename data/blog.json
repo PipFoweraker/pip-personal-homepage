@@ -14,6 +14,18 @@
     },
     {
       "id": 2,
+      "title": "P(DOOM) Stable Alpha Release",
+      "slug": "pdoom-stable-alpha",
+      "date": "02025-09-21",
+      "author": "Pip",
+      "description": "Announcing the stable alpha release of P(DOOM) - lessons learned and what's next.",
+      "status": "draft",
+      "tags": ["pdoom", "gamedev", "release", "ai-safety"],
+      "file_path": "blog/projects/pdoom-stable-alpha.md",
+      "topic": "projects"
+    },
+    {
+      "id": 3,
       "title": "**PLACEHOLDER CONTENT**",
       "slug": "placeholder-post",
       "date": "02025-09-14",
