@@ -1,0 +1,26 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "pip-personal-homepage",
+      "description": "Personal homepage with lab-themed design and data-driven architecture",
+      "github_url": "https://github.com/PipFoweraker/pip-personal-homepage",
+      "live_url": "https://pipfoweraker.com",
+      "language": "JavaScript",
+      "topics": ["html", "css", "javascript", "personal-website"],
+      "featured": true,
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "**PLACEHOLDER CONTENT**",
+      "description": "**PLACEHOLDER CONTENT**",
+      "github_url": "https://github.com/PipFoweraker/placeholder",
+      "live_url": null,
+      "language": "**PLACEHOLDER CONTENT**",
+      "topics": ["placeholder"],
+      "featured": false,
+      "status": "placeholder"
+    }
+  ]
+}

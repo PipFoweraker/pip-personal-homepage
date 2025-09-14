@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Pip's Lab</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/lab-config.css">
+    <link rel="stylesheet" href="styles/data-content.css">
+</head>
+<body>
+  <nav class="lab-nav">
+    <div class="nav-brand">
+      <a href="index.html">pip@localhost:~$</a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="projects.html">Projects</a>
+      <a href="essays.html">Essays</a>
+      <a href="projects.html" class="current">Projects</a>
+      <a href="library.html">Library</a>
+      <a href="memes.html">Memes</a>
+      <a href="aphorisms.html">Aphorisms</a>
+      <a href="drafts.html">Drafts</a>
+      <a href="photos.html" class="disabled">Photos</a>
+      <a href="art.html" class="disabled">Art</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="lab-panel">
+      <h1>Projects</h1>
+      <p>A collection of my public repositories and coding projects. Data synced live from GitHub.</p>
+      
+      <div id="projects-container" class="projects-grid">
+        <!-- Content will be loaded dynamically from GitHub API + local projects.json -->
+      </div>
+    </div>
+  </div>
+  
+  <script src="scripts/data-loader.js"></script>
+  <script src="scripts/github-projects.js"></script>
+  <script>
+    // Load and render all projects
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.DataSystem && window.DataSystem.projectRenderer) {
+        await window.DataSystem.projectRenderer.renderProjects('projects-container');
+      }
+    });
+  </script>
+</body>
+</html>

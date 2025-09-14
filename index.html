@@ -29,15 +29,12 @@
             </div>
             <nav class="lab-nav">
                 <a href="index.html" class="nav-link active">Home</a>
-                <a href="library.html" class="nav-link">Reference Library</a>
+                <a href="blog/index.html" class="nav-link">Blog</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="library.html" class="nav-link">Library</a>
                 <a href="memes.html" class="nav-link">Memes</a>
                 <a href="aphorisms.html" class="nav-link">Aphorisms</a>
-                <a href="photos.html" class="nav-link">Photos</a>
-                <a href="art.html" class="nav-link">Art</a>
                 <a href="drafts.html" class="nav-link">Drafts</a>
-                <a href="readlist.html" class="nav-link">Read/Follow List</a>
-                <a href="whitelist.html" class="nav-link">Whitelist</a>
-                <a href="blacklist.html" class="nav-link">Blacklist</a>
                 <a href="#about" class="nav-link">About</a>
             </nav>
         </header>
@@ -172,69 +169,18 @@
                 </div>
             </section>
 
-            <!-- Code Section -->
+            <!-- Projects Section -->
             <section id="code" class="content-section">
                 <div class="lab-panel">
                     <div class="panel-header">
-                        <h2 class="panel-title">Code Projects</h2>
+                        <h2 class="panel-title">Featured Projects</h2>
+                        <div class="panel-controls">
+                            <a href="projects.html" class="lab-button">View All Projects</a>
+                        </div>
                     </div>
                     <div class="panel-content">
-                        <div class="projects-grid">
-                            <div class="project-card rarity-legendary">
-                                <div class="project-header">
-                                    <h3>pdoom-data</h3>
-                                    <div class="project-status status-active">Active</div>
-                                </div>
-                                <div class="project-content">
-                                    <p>Comprehensive AI safety historical events database with cross-repository integration system.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">JSON</span>
-                                        <span class="tech-tag">Data Architecture</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/PipFoweraker/pdoom-data" class="project-link">GitHub</a>
-                                    <a href="https://github.com/PipFoweraker/pdoom-data#readme" class="project-link">Documentation</a>
-                                </div>
-                            </div>
-
-                            <div class="project-card rarity-rare">
-                                <div class="project-header">
-                                    <h3>Personal Homepage</h3>
-                                    <div class="project-status status-development">Development</div>
-                                </div>
-                                <div class="project-content">
-                                    <p>Static website with lab-themed UI design. Fast to update, easy to deploy.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">HTML5</span>
-                                        <span class="tech-tag">CSS3</span>
-                                        <span class="tech-tag">JavaScript</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/PipFoweraker/pip-personal-homepage" class="project-link">GitHub</a>
-                                    <a href="#" class="project-link" title="Will update when deployed">Live Site</a>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-header">
-                                    <h3>Game Integration System</h3>
-                                    <div class="project-status status-planning">Planning</div>
-                                </div>
-                                <div class="project-content">
-                                    <p>Cross-platform integration between data repositories and game engines.</p>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag">Python</span>
-                                        <span class="tech-tag">Pygame</span>
-                                        <span class="tech-tag">API Design</span>
-                                    </div>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/PipFoweraker" class="project-link">GitHub Profile</a>
-                                </div>
-                            </div>
+                        <div id="featured-projects" class="projects-grid">
+                            <!-- Featured projects will be loaded dynamically from GitHub API -->
                         </div>
                     </div>
                 </div>
@@ -361,10 +307,12 @@
     </div>
 
     <script src="scripts/data-loader.js"></script>
+    <script src="scripts/github-projects.js"></script>
     <script src="scripts/main.js"></script>
     <script>
-        // Load recent blog posts on homepage
+        // Load recent blog posts and featured projects on homepage
         document.addEventListener('DOMContentLoaded', async () => {
+            // Load blog posts
             const blogData = await window.DataSystem.dataManager.loadData('blog');
             if (blogData && blogData.blog_posts) {
                 // Get the most recent 3 published posts
@@ -373,6 +321,14 @@
                     .slice(0, 3);
                 
                 window.DataSystem.renderer.renderBlogPosts(recentPosts, 'blog-posts');
+            }
+
+            // Load featured projects
+            if (window.DataSystem && window.DataSystem.projectRenderer) {
+                await window.DataSystem.projectRenderer.renderProjects('featured-projects', {
+                    featuredOnly: true,
+                    limit: 3
+                });
             }
         });
     </script>
