@@ -34,8 +34,9 @@
                 <nav class="site-nav" aria-label="Main navigation">
                     <a href="/" {% if page.url == "/" %}class="active" aria-current="page"{% endif %}>Home</a>
                     <a href="/about/" {% if page.url == "/about/" %}class="active" aria-current="page"{% endif %}>About</a>
-                    <a href="/essays/" {% if page.url | startsWith("/essays/") %}class="active"{% endif %}>Essays</a>
                     <a href="/projects/" {% if page.url | startsWith("/projects/") %}class="active"{% endif %}>Projects</a>
+                    <a href="/github/" {% if page.url == "/github/" %}class="active" aria-current="page"{% endif %}>GitHub</a>
+                    <a href="/contact/" {% if page.url == "/contact/" %}class="active" aria-current="page"{% endif %}>Contact</a>
                 </nav>
             </div>
         </header>

@@ -10,21 +10,27 @@ created: 2025-01-22
 
 I'm Pip Foweraker. I work at the intersection of technology, institutions, and existential risk.
 
-Currently I serve as CEO of [Altruistic Agency](https://altruistic.agency), a fiscal sponsorship organisation that provides infrastructure for high-impact projects. I'm also the incoming Executive Director of an AI safety research organisation.
+I serve as CEO of [Beacon](https://beaconfs.org), a 501(c)(3) fiscal sponsorship agency that supports projects addressing catastrophic and existential risks. I'm also Executive Director of Research at the [Certes Institute](https://certesinstitute.org), an Australian research organisation focused on catastrophic and existential risk.
 
 ## What I Do
 
 My work focuses on:
 
-- **Institution building** - Creating the organisational infrastructure that enables important work
-- **AI safety** - Contributing to research and coordination efforts around transformative AI
+- **Institution building** - Creating the organisational infrastructure that enables important work to happen
+- **Existential risk research** - Contributing to research and coordination efforts around catastrophic and existential risks, including AI safety
 - **Writing** - Thinking in public about technology, strategy, and the future
+
+## Beacon
+
+[Beacon](https://beaconfs.org) is a 501(c)(3) fiscal sponsor that provides infrastructure for projects working on catastrophic and existential risks. We handle the operational complexity—legal structure, compliance, financial administration—so founders and researchers can focus on their mission.
+
+## Certes Institute
+
+The [Certes Institute](https://certesinstitute.org) is an Australian research organisation working on catastrophic and existential risk. As Executive Director of Research, I help shape our research agenda and build the team working on these critical challenges.
 
 ## This Site
 
 This site serves as my public home on the internet. It's inspired by [Gwern's approach](https://gwern.net/about) to personal websites: a long-term project that grows organically, with attention to typography, accessibility, and thoughtful presentation.
-
-The aesthetic aims for something between clean modernism and baroque ornamentation - we'll see how it evolves.
 
 ### Design Philosophy
 
@@ -34,6 +40,4 @@ The aesthetic aims for something between clean modernism and baroque ornamentati
 
 ## Contact
 
-The best way to reach me is via email: [pip@pipfoweraker.com](mailto:pip@pipfoweraker.com)
-
-You can also find me on [GitHub](https://github.com/PipFoweraker).
+You can reach me via the [contact form](/contact/) or find me on [GitHub](https://github.com/PipFoweraker).

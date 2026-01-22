@@ -7,14 +7,14 @@ title: Home
 
 # Pip Foweraker
 
-I'm the CEO of [Altruistic Agency](https://altruistic.agency), a fiscal sponsorship organisation, and incoming Executive Director of an AI safety research organisation.
+I'm the CEO of [Beacon](https://beaconfs.org), a 501(c)(3) fiscal sponsorship agency focusing on catastrophic and existential risk, and Executive Director of Research at the [Certes Institute](https://certesinstitute.org), an Australian research organisation working on catastrophic and existential risk.
 
-I build things, write occasionally, and try to help humanity navigate the transition to transformative AI.
+I build institutions, write occasionally, and work to help humanity navigate the transition to transformative AI.
 
 ## Current Focus
 
-- **Altruistic Agency** - Fiscal sponsorship for high-impact projects
-- **AI Safety Research** - Contributing to the global effort to ensure AI goes well
+- **[Beacon](https://beaconfs.org)** - Fiscal sponsorship for projects addressing catastrophic and existential risks
+- **[Certes Institute](https://certesinstitute.org)** - Research on catastrophic and existential risk
 - **Writing** - Essays on technology, institutions, and the future
 
 ## Recent Writing
@@ -24,6 +24,6 @@ I build things, write occasionally, and try to help humanity navigate the transi
 ## Connect
 
 - [GitHub](https://github.com/PipFoweraker)
-- [Email](mailto:pip@pipfoweraker.com)
+- [Contact](/contact/)
 
 </article>

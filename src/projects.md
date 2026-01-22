@@ -9,33 +9,28 @@ title: Projects
 
 Things I'm building, have built, or am involved with.
 
-## Current
+## Current Organisations
 
-### Altruistic Agency
+### Beacon
 *CEO*
 
-Fiscal sponsorship organisation providing infrastructure for high-impact projects. We handle the operational complexity so founders can focus on their mission.
+[Beacon](https://beaconfs.org) is a 501(c)(3) fiscal sponsorship agency focusing on catastrophic and existential risk. We provide the legal, financial, and operational infrastructure that enables projects to launch quickly and focus on their mission rather than administrative overhead.
 
-[altruistic.agency](https://altruistic.agency)
+### Certes Institute
+*Executive Director of Research*
 
-### AI Safety Research Organisation
-*Incoming Executive Director*
-
-Details to be announced.
-
-## Past & Ongoing
-
-### P(DOOM)
-Research and tools related to AI risk assessment.
-
-[pdoom1.com](https://pdoom1.com)
+The [Certes Institute](https://certesinstitute.org) is an Australian research organisation working on catastrophic and existential risk. We conduct research, build tools, and work to improve humanity's ability to navigate existential challenges.
 
 ## Open Source
 
-Selected projects on GitHub:
+See my [GitHub repositories](/github/) for a full list of public projects.
 
-- *Project list to be populated*
+Selected highlights:
 
-[View all on GitHub](https://github.com/PipFoweraker)
+- Research tools and data infrastructure
+- AI safety related projects
+- Various experiments and utilities
+
+[View all repositories →](/github/)
 
 </article>
