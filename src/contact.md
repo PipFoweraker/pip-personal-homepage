@@ -9,7 +9,7 @@ title: Contact
 
 The best way to reach me is through the form below. I read everything, though I may not be able to respond to all messages.
 
-<form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
+<form id="contact-form" action="https://formspree.io/f/mwvvdbpl" method="POST" class="contact-form">
     <div class="form-group">
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
