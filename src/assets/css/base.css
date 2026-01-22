@@ -593,81 +593,27 @@ hr {
 }
 
 /* ==================== */
-/* GITHUB REPOS         */
+/* DETAILS/SUMMARY      */
 /* ==================== */
 
-.repos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-lg);
-    margin: var(--space-lg) 0;
+details {
+    margin: var(--space-sm) 0 var(--space-md) 0;
 }
 
-.repo-card {
-    padding: var(--space-md);
-    border: 1px solid var(--color-border-light);
-    border-radius: 4px;
-    background: var(--color-bg-alt);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.repo-card:hover {
-    border-color: var(--color-border);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.repo-card h3 {
-    margin: 0 0 var(--space-sm) 0;
-    font-size: 1.1em;
-}
-
-.repo-card h3 a {
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-.repo-card h3 a:hover {
-    color: var(--color-link);
-}
-
-.repo-card p {
-    margin: 0 0 var(--space-sm) 0;
+details summary {
+    cursor: pointer;
+    color: var(--color-text-muted);
     font-size: var(--font-size-small);
-    color: var(--color-text-muted);
 }
 
-.repo-meta {
-    display: flex;
-    gap: var(--space-md);
-    font-size: var(--font-size-tiny);
-    color: var(--color-text-faint);
+details summary:hover {
+    color: var(--color-text);
 }
 
-.repo-meta span {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
+details[open] summary {
+    margin-bottom: var(--space-sm);
 }
 
-.repo-language {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--color-accent);
-}
-
-/* Language colors */
-.repo-language[data-lang="JavaScript"] { background: #f1e05a; }
-.repo-language[data-lang="TypeScript"] { background: #3178c6; }
-.repo-language[data-lang="Python"] { background: #3572A5; }
-.repo-language[data-lang="HTML"] { background: #e34c26; }
-.repo-language[data-lang="CSS"] { background: #563d7c; }
-.repo-language[data-lang="Shell"] { background: #89e051; }
-.repo-language[data-lang="Haskell"] { background: #5e5086; }
-
-.repos-loading {
-    text-align: center;
-    padding: var(--space-xl);
-    color: var(--color-text-muted);
+details > *:not(summary) {
+    margin-left: var(--space-md);
 }
