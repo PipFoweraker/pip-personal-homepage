@@ -1,0 +1,52 @@
+---
+layout: base.njk
+---
+
+<article class="essay has-sidenotes">
+    <header>
+        <h1>{{ title }}</h1>
+        {% if description %}
+        <p class="text-muted text-center">{{ description }}</p>
+        {% endif %}
+    </header>
+
+    {% if status or confidence or created %}
+    <div class="page-meta">
+        {% if created %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Created:</span> {{ created | date("readable") }}
+        </span>
+        {% endif %}
+        {% if modified and modified != created %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Updated:</span> {{ modified | date("readable") }}
+        </span>
+        {% endif %}
+        {% if status %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Status:</span> {{ status }}
+        </span>
+        {% endif %}
+        {% if confidence %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Confidence:</span> {{ confidence }}
+        </span>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="essay-content">
+        {{ content | safe }}
+    </div>
+
+    {% if tags and tags.length > 1 %}
+    <footer class="essay-footer">
+        <p class="text-small text-muted">
+            Tags:
+            {% for tag in tags %}{% if tag != "posts" %}
+            <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+            {% endif %}{% endfor %}
+        </p>
+    </footer>
+    {% endif %}
+</article>

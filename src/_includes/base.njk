@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} - {% endif %}Pip Foweraker</title>
+
+    {% if description %}
+    <meta name="description" content="{{ description }}">
+    {% endif %}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ title or 'Pip Foweraker' }}">
+    <meta property="og:description" content="{{ description or 'CEO, researcher, builder.' }}">
+    <meta property="og:type" content="{% if layout == 'post' %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="https://pipfoweraker.com{{ page.url }}">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/base.css">
+
+    <!-- Preload fonts (add when fonts are set up) -->
+    <!-- <link rel="preload" href="/assets/fonts/..." as="font" type="font/woff2" crossorigin> -->
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="Pip Foweraker" href="/feed.xml">
+</head>
+<body class="{% if darkMode %}dark-mode{% endif %}">
+    <div class="site-wrapper">
+        <header class="site-header">
+            <div class="site-header-inner">
+                <h1 class="site-title">
+                    <a href="/">Pip Foweraker</a>
+                </h1>
+                <nav class="site-nav" aria-label="Main navigation">
+                    <a href="/" {% if page.url == "/" %}class="active" aria-current="page"{% endif %}>Home</a>
+                    <a href="/about/" {% if page.url == "/about/" %}class="active" aria-current="page"{% endif %}>About</a>
+                    <a href="/essays/" {% if page.url | startsWith("/essays/") %}class="active"{% endif %}>Essays</a>
+                    <a href="/projects/" {% if page.url | startsWith("/projects/") %}class="active"{% endif %}>Projects</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            {{ content | safe }}
+        </main>
+
+        <footer class="site-footer">
+            <p>
+                &copy; {{ site.year or "2025" }} Pip Foweraker.
+                Content <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> unless noted.
+            </p>
+            <p>
+                <a href="https://github.com/PipFoweraker">GitHub</a> &middot;
+                <a href="/feed.xml">RSS</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="/assets/js/main.js" defer></script>
+</body>
+</html>
