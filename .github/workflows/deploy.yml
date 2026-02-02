@@ -1,0 +1,65 @@
+name: Build and Deploy to Dreamhost
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npx @11ty/eleventy
+
+      - name: Verify build output
+        run: |
+          test -f _site/index.html || (echo "Build failed: no _site/index.html" && exit 1)
+          echo "Build output:"
+          find _site -type f | head -30
+          echo "---"
+          echo "Total files: $(find _site -type f | wc -l)"
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DREAMHOST_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.DREAMHOST_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='.env*' \
+            --exclude='backup-*' \
+            --exclude='.dh-diag' \
+            _site/ \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            dh_gj4pen@iad1-shared-b8-18.dreamhost.com:/home/dh_gj4pen/pipfoweraker.com/
+
+      - name: Verify deployment
+        run: |
+          sleep 5
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://pipfoweraker.com)
+          echo "Site returned HTTP $STATUS"
+          if [ "$STATUS" -ge 400 ]; then
+            echo "Warning: site returned error status"
+            exit 1
+          fi
