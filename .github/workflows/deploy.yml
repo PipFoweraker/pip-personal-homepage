@@ -41,7 +41,17 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DREAMHOST_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo "${{ secrets.DREAMHOST_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          echo "${{ secrets.DREAMHOST_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host dreamhost
+            HostName iad1-shared-b8-18.dreamhost.com
+            User dh_gj4pen
+            IdentityFile ~/.ssh/deploy_key
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
+          EOF
+          chmod 600 ~/.ssh/config
 
       - name: Deploy via rsync
         run: |
@@ -50,9 +60,9 @@ jobs:
             --exclude='.env*' \
             --exclude='backup-*' \
             --exclude='.dh-diag' \
+            -e "ssh -F ~/.ssh/config" \
             _site/ \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            dh_gj4pen@iad1-shared-b8-18.dreamhost.com:/home/dh_gj4pen/pipfoweraker.com/
+            dreamhost:/home/dh_gj4pen/pipfoweraker.com/
 
       - name: Verify deployment
         run: |
