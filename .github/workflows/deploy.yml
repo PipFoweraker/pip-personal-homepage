@@ -41,7 +41,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.DREAMHOST_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo "${{ secrets.DREAMHOST_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -t ed25519 iad1-shared-b8-18.dreamhost.com >> ~/.ssh/known_hosts 2>/dev/null
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy via rsync
@@ -51,7 +51,7 @@ jobs:
             --exclude='.env*' \
             --exclude='backup-*' \
             --exclude='.dh-diag' \
-            -e "ssh -i ~/.ssh/deploy_key -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes" \
+            -e "ssh -i ~/.ssh/deploy_key" \
             _site/ \
             dh_gj4pen@iad1-shared-b8-18.dreamhost.com:/home/dh_gj4pen/pipfoweraker.com/
 
