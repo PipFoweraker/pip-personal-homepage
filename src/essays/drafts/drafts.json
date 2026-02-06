@@ -1,0 +1,6 @@
+{
+  "layout": "essay.njk",
+  "tags": "drafts",
+  "status": "draft",
+  "permalink": "/essays/drafts/{{ page.fileSlug }}/"
+}

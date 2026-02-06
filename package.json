@@ -6,7 +6,9 @@
   "scripts": {
     "start": "npx @11ty/eleventy --serve",
     "build": "npx @11ty/eleventy",
-    "debug": "DEBUG=Eleventy* npx @11ty/eleventy"
+    "debug": "DEBUG=Eleventy* npx @11ty/eleventy",
+    "stage": "bash scripts/stage-essay.sh",
+    "publish-essay": "bash scripts/publish-essay.sh"
   },
   "keywords": [
     "personal-site",

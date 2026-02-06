@@ -9,16 +9,17 @@ title: Essays
 
 Long-form writing on technology, institutions, AI safety, and related topics.
 
-## Published
-
+{% if collections.essays.length > 0 %}
+<ul class="essay-list">
+{% for essay in collections.essays %}
+  <li>
+    <a href="{{ essay.url }}">{{ essay.data.title }}</a>
+    {% if essay.data.description %}<p class="text-muted text-small">{{ essay.data.description }}</p>{% endif %}
+  </li>
+{% endfor %}
+</ul>
+{% else %}
 *Essays coming soon.*
-
-## In Progress
-
-Essays I'm actively working on. Check back or subscribe to the [RSS feed](/feed.xml) for updates.
-
-## Archive
-
-Older writing that may be of historical interest.
+{% endif %}
 
 </article>

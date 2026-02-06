@@ -35,6 +35,18 @@ module.exports = function(eleventyConfig) {
     return d.toISOString();
   });
 
+  // Published essays collection (excludes drafts subfolder)
+  eleventyConfig.addCollection("essays", (collection) => {
+    return collection.getFilteredByGlob("src/essays/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
+  // Draft essays collection (for unlisted preview URLs)
+  eleventyConfig.addCollection("drafts", (collection) => {
+    return collection.getFilteredByGlob("src/essays/drafts/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Markdown configuration for sidenotes
   let markdownIt = require("markdown-it");
   let md = markdownIt({
