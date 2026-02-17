@@ -1,0 +1,25 @@
+---
+layout: base.njk
+---
+
+<article class="note">
+    <header>
+        <h1>{{ title or page.fileSlug }}</h1>
+        <p class="text-muted text-center text-small">{{ date | date("readable") }}</p>
+    </header>
+
+    <div class="essay-content">
+        {{ content | safe }}
+    </div>
+
+    {% if tags and tags.length > 1 %}
+    <footer class="essay-footer">
+        <p class="text-small text-muted">
+            Tags:
+            {% for tag in tags %}{% if tag != "notes" %}
+            <a href="/tags/{{ tag | slugify }}/">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+            {% endif %}{% endfor %}
+        </p>
+    </footer>
+    {% endif %}
+</article>

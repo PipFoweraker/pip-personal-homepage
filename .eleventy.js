@@ -47,6 +47,12 @@ module.exports = function(eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Notes collection
+  eleventyConfig.addCollection("notes", (collection) => {
+    return collection.getFilteredByGlob("src/notes/*.md")
+      .sort((a, b) => b.date - a.date);
+  });
+
   // Markdown configuration for sidenotes
   let markdownIt = require("markdown-it");
   let md = markdownIt({
