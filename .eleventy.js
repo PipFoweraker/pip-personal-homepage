@@ -1,4 +1,9 @@
+const pluginRss = require("@11ty/eleventy-plugin-rss");
+
 module.exports = function(eleventyConfig) {
+  // RSS plugin
+  eleventyConfig.addPlugin(pluginRss);
+
   // Pass through static assets
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("robots.txt");
@@ -51,6 +56,15 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addCollection("notes", (collection) => {
     return collection.getFilteredByGlob("src/notes/*.md")
       .sort((a, b) => b.date - a.date);
+  });
+
+  // Combined feed collection (essays + notes, most recent 20)
+  eleventyConfig.addCollection("feed", (collection) => {
+    const essays = collection.getFilteredByGlob("src/essays/*.md");
+    const notes = collection.getFilteredByGlob("src/notes/*.md");
+    return [...essays, ...notes]
+      .sort((a, b) => b.date - a.date)
+      .slice(0, 20);
   });
 
   // Markdown configuration for sidenotes
