@@ -669,3 +669,81 @@ details[open] summary {
 details > *:not(summary) {
     margin-left: var(--space-md);
 }
+
+/* ======================================= */
+/* DECORATIVE ELEMENTS - Baroque/Elven     */
+/* Reversible: remove this section cleanly */
+/* ======================================= */
+
+/* Ornamental divider for horizontal rules */
+hr {
+    border: none;
+    text-align: center;
+    margin: var(--space-xl) 0;
+    line-height: 1;
+}
+
+hr::before {
+    content: "\2767\2009\2736\2009\2767";
+    color: var(--color-accent);
+    font-size: 1.1em;
+    letter-spacing: 0.15em;
+}
+
+/* Drop cap on first paragraph of essays and notes */
+.essay-content > p:first-child::first-letter,
+.note .essay-content > p:first-child::first-letter {
+    float: left;
+    font-size: 3.4em;
+    line-height: 0.8;
+    padding-right: 0.08em;
+    padding-top: 0.05em;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+/* Blockquote flourish - decorative corner marks */
+blockquote {
+    position: relative;
+    border-left: 2px solid var(--color-accent);
+}
+
+blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -0.15em;
+    left: 0.15em;
+    font-size: 2.5em;
+    color: var(--color-accent);
+    opacity: 0.3;
+    line-height: 1;
+}
+
+/* Header title flourish — small ornament beneath */
+.site-title a::after {
+    content: "\2009\2E31\2009";
+    color: var(--color-accent);
+    opacity: 0.5;
+}
+
+/* Page meta separator flourish */
+.page-meta-item + .page-meta-item::before {
+    content: "\2022\2009";
+    color: var(--color-accent);
+    opacity: 0.5;
+}
+
+/* Essay/note footer separator — ornamental */
+.essay-footer {
+    border-top: none;
+    text-align: center;
+}
+
+.essay-footer::before {
+    content: "\2766";
+    display: block;
+    margin-bottom: var(--space-md);
+    color: var(--color-accent);
+    opacity: 0.5;
+    font-size: 1.2em;
+}
