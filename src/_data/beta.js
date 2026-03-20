@@ -692,7 +692,8 @@ const colorLabels = {
 const byColor = {};
 const colorStats = {};
 for (const color of colorOrder) {
-  const colorCards = enriched.filter(c => c.color === color);
+  const colorCards = enriched.filter(c => c.color === color)
+    .sort((a, b) => a.name.localeCompare(b.name));
   byColor[color] = colorCards;
   const owned = colorCards.filter(c => c.have).length;
   colorStats[color] = {
@@ -706,7 +707,8 @@ for (const color of colorOrder) {
 const rarityLabels = { R: "Rare", U: "Uncommon", C: "Common" };
 const neededByRarity = {};
 for (const r of ["R", "U", "C"]) {
-  neededByRarity[r] = enriched.filter(c => !c.have && c.rarity === r);
+  neededByRarity[r] = enriched.filter(c => !c.have && c.rarity === r)
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 const total = enriched.length;

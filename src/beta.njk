@@ -52,12 +52,14 @@ permalink: /beta/
     {% for r in ["R", "U", "C"] %}
     {% set rCards = beta.neededByRarity[r] %}
     {% if rCards.length > 0 %}
-    <h3>{{ beta.rarityLabels[r] }} <span class="text-muted text-small">({{ rCards.length }})</span></h3>
-    <ul class="beta-cards">
-        {% for card in rCards %}
-        <li>{{ card.name }}<span class="beta-type">{{ card.type }}</span></li>
-        {% endfor %}
-    </ul>
+    <details>
+        <summary>{{ beta.rarityLabels[r] }} <span class="text-muted text-small">({{ rCards.length }})</span></summary>
+        <ul class="beta-cards">
+            {% for card in rCards %}
+            <li>{{ card.name }} <span class="beta-type">{{ card.type }}</span></li>
+            {% endfor %}
+        </ul>
+    </details>
     {% endif %}
     {% endfor %}
 
@@ -76,7 +78,7 @@ permalink: /beta/
     {% for color in beta.colorOrder %}
     {% set colorCards = beta.byColor[color] %}
     {% set stats = beta.colorStats[color] %}
-    <details{% if stats.needed > 0 %} open{% endif %}>
+    <details>
         <summary>{{ beta.colorLabels[color] }} &mdash; {{ stats.owned }}/{{ stats.total }}</summary>
         <ul class="beta-cards">
             {% for card in colorCards %}
