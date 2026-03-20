@@ -1,0 +1,68 @@
+---
+layout: base.njk
+title: Reading
+---
+
+<article>
+
+<h1>Reading</h1>
+
+<p class="text-muted">Articles saved from Feedly. {{ collections.reading.length }} items total.</p>
+
+{% set categories = [] %}
+{% for item in collections.reading %}
+  {% if item.data.category and item.data.category not in categories %}
+    {% set categories = (categories.push(item.data.category), categories) %}
+  {% endif %}
+{% endfor %}
+
+<div class="reading-filters text-small">
+  <span class="page-meta-label">Categories:</span>
+  {% for cat in categories | sort %}
+    <a href="#{{ cat }}">{{ cat }}</a>{% if not loop.last %} · {% endif %}
+  {% endfor %}
+</div>
+
+<div class="reading-stats page-meta text-small">
+  {% set unreviewed = 0 %}{% set noted = 0 %}{% set written = 0 %}{% set archived = 0 %}
+  {% for item in collections.reading %}
+    {% if item.data.status == "unreviewed" %}{% set unreviewed = unreviewed + 1 %}
+    {% elif item.data.status == "noted" %}{% set noted = noted + 1 %}
+    {% elif item.data.status == "written" %}{% set written = written + 1 %}
+    {% elif item.data.status == "archived" %}{% set archived = archived + 1 %}
+    {% endif %}
+  {% endfor %}
+  <span class="page-meta-item"><span class="page-meta-label">Unreviewed:</span> {{ unreviewed }}</span>
+  <span class="page-meta-item"><span class="page-meta-label">Noted:</span> {{ noted }}</span>
+  <span class="page-meta-item"><span class="page-meta-label">Written:</span> {{ written }}</span>
+  <span class="page-meta-item"><span class="page-meta-label">Archived:</span> {{ archived }}</span>
+</div>
+
+{% for cat in categories | sort %}
+<h2 id="{{ cat }}">{{ cat | capitalize }}</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Source</th>
+      <th>Saved</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in collections.reading %}
+      {% if item.data.category == cat %}
+    <tr>
+      <td><a href="{{ item.url }}">{{ item.data.title }}</a></td>
+      <td class="text-muted">{{ item.data.sourceTitle }}</td>
+      <td class="text-muted">{{ item.data.saved | date("YYYY-MM-DD") }}</td>
+      <td><span class="reading-status-badge reading-status-{{ item.data.status }}">{{ item.data.status }}</span></td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+{% endfor %}
+
+</article>

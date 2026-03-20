@@ -1,0 +1,69 @@
+---
+layout: base.njk
+---
+
+<article class="essay">
+    <header>
+        <h1>{{ title }}</h1>
+    </header>
+
+    <div class="page-meta">
+        {% if sourceTitle %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Source:</span> {{ sourceTitle }}
+        </span>
+        {% endif %}
+        {% if author %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Author:</span> {{ author }}
+        </span>
+        {% endif %}
+        {% if published %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Published:</span> {{ published | date("readable") }}
+        </span>
+        {% endif %}
+        {% if saved %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Saved:</span> {{ saved | date("readable") }}
+        </span>
+        {% endif %}
+        {% if category %}
+        <span class="page-meta-item">
+            <span class="page-meta-label">Category:</span> {{ category }}
+        </span>
+        {% endif %}
+        {% if url %}
+        <span class="page-meta-item">
+            <a href="{{ url }}" class="external-link" target="_blank" rel="noopener">Original article</a>
+        </span>
+        {% endif %}
+    </div>
+
+    <div class="reading-source-badge">
+        Saved from Feedly
+        {% if contentType == "summary" %} · Summary only{% endif %}
+        {% if contentType == "none" %} · No cached content{% endif %}
+    </div>
+
+    {% if status %}
+    <div class="reading-status reading-status-{{ status }}">
+        {{ status }}
+    </div>
+    {% endif %}
+
+    <div class="essay-content">
+        {{ content | safe }}
+    </div>
+
+    {% if tags and tags.length > 0 %}
+    <footer class="essay-footer">
+        <p class="text-small text-muted">
+            Topics:
+            {% for tag in tags %}
+            <span>{{ tag }}</span>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </footer>
+    {% endif %}
+</article>

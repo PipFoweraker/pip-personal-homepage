@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive Triage</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --surface-raised: #1f2b47;
+      --text: #eee;
+      --text-muted: #888;
+      --accent: #e94560;
+      --success: #4ecca3;
+      --warning: #ffc857;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'SF Mono', 'Consolas', monospace;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--surface);
+      padding: 0.75rem 1.5rem;
+      border-bottom: 1px solid var(--surface-raised);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    h1 { font-size: 1.1rem; font-weight: normal; }
+
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      align-items: center;
+    }
+
+    .stat { color: var(--text-muted); }
+    .stat strong { color: var(--text); }
+
+    .progress-bar {
+      width: 180px;
+      height: 5px;
+      background: var(--surface-raised);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--success);
+      transition: width 0.3s;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 0;
+    }
+
+    .file-info {
+      margin-bottom: 0.5rem;
+    }
+
+    .file-path {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .file-name {
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    .file-meta {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .type-badge {
+      display: inline-block;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-left: 0.5rem;
+    }
+
+    .type-badge.image { background: #2d5a88; color: #8ecae6; }
+    .type-badge.text { background: #2d6a4f; color: #95d5b2; }
+    .type-badge.document { background: #5a3d2d; color: #deb887; }
+
+    /* Content area: split pane for images, single pane for text */
+    .content-area {
+      flex: 1;
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      min-height: 300px;
+      max-height: 65vh;
+    }
+
+    .pane {
+      background: var(--surface);
+      border-radius: 6px;
+      overflow: auto;
+      position: relative;
+    }
+
+    .pane-label {
+      position: sticky;
+      top: 0;
+      background: var(--surface-raised);
+      padding: 0.3rem 0.75rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      z-index: 1;
+    }
+
+    /* Image pane */
+    .image-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .image-pane img {
+      max-width: 100%;
+      max-height: calc(65vh - 2rem);
+      object-fit: contain;
+      padding: 0.5rem;
+    }
+
+    .image-controls {
+      position: sticky;
+      bottom: 0;
+      background: var(--surface-raised);
+      padding: 0.3rem 0.75rem;
+      font-size: 0.7rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .image-controls button {
+      background: var(--surface);
+      border: 1px solid var(--surface-raised);
+      color: var(--text);
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.7rem;
+    }
+
+    .image-controls button:hover { border-color: var(--accent); }
+
+    /* Text content pane (for text/document files) */
+    .text-pane {
+      flex: 1;
+      padding: 1rem;
+      white-space: pre-wrap;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .text-pane.no-content {
+      color: var(--text-muted);
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Transcription pane */
+    .transcription-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .transcription-pane textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      padding: 0.75rem;
+      resize: none;
+      outline: none;
+    }
+
+    .transcription-pane textarea::placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .transcription-status {
+      padding: 0.2rem 0.75rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      background: var(--surface-raised);
+      text-align: right;
+    }
+
+    .transcription-status.saving { color: var(--warning); }
+    .transcription-status.saved { color: var(--success); }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-btn {
+      padding: 0.4rem 0.9rem;
+      border: 2px solid var(--surface-raised);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.8rem;
+      transition: all 0.15s;
+    }
+
+    .cat-btn:hover {
+      border-color: var(--accent);
+      background: var(--surface-raised);
+    }
+
+    .cat-btn.selected {
+      border-color: var(--success);
+      background: var(--success);
+      color: var(--bg);
+    }
+
+    .cat-btn[data-cat="deletable"] { border-color: #e94560; }
+    .cat-btn[data-cat="deletable"].selected { background: #e94560; border-color: #e94560; }
+    .cat-btn[data-cat="publishable"] { border-color: #4ecca3; }
+    .cat-btn[data-cat="publishable"].selected { background: #4ecca3; border-color: #4ecca3; }
+
+    /* Navigation */
+    .navigation {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--surface-raised);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.75rem;
+    }
+
+    .nav-btn:hover { background: var(--surface-raised); }
+    .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .nav-input {
+      width: 70px;
+      padding: 0.4rem;
+      border: 1px solid var(--surface-raised);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 4px;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .spacer { flex: 1; }
+
+    .export-btn {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Filter section */
+    .filter-section {
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--surface-raised);
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.7rem;
+    }
+
+    .filter-btn.active {
+      background: var(--surface-raised);
+      color: var(--text);
+    }
+
+    .filter-sep {
+      color: var(--text-muted);
+      margin: 0 0.25rem;
+      font-size: 0.7rem;
+    }
+
+    .search-input {
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--surface-raised);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      width: 180px;
+    }
+
+    kbd {
+      background: var(--surface-raised);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-size: 0.65rem;
+      margin-left: 0.2rem;
+    }
+
+    /* Log panel (collapsible) */
+    .log-toggle {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.7rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .log-toggle:hover { color: var(--text); }
+
+    .log-panel {
+      background: var(--surface);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .log-panel.open { display: block; }
+
+    .log-entry {
+      color: var(--text-muted);
+      padding: 0.15rem 0;
+      border-bottom: 1px solid var(--surface-raised);
+    }
+
+    .log-entry:last-child { border-bottom: none; }
+
+    .log-entry .log-time {
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .log-entry .log-action {
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Archive Triage</h1>
+    <div class="stats">
+      <span class="stat"><strong id="done-count">0</strong> / <span id="total-count">0</span> categorized</span>
+      <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+      <span class="stat" id="type-counts"></span>
+      <span class="stat" id="current-filter">Showing: all</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="filter-section">
+      <span style="color: var(--text-muted); font-size: 0.7rem;">Show:</span>
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="uncategorized">Uncategorized</button>
+      <span class="filter-sep">|</span>
+      <button class="filter-btn" data-filter="fragment">Fragments</button>
+      <button class="filter-btn" data-filter="idea">Ideas</button>
+      <button class="filter-btn" data-filter="deliria">Deliria</button>
+      <button class="filter-btn" data-filter="desiderata">Desiderata</button>
+      <button class="filter-btn" data-filter="publishable">Publishable</button>
+      <button class="filter-btn" data-filter="reference">Reference</button>
+      <button class="filter-btn" data-filter="deletable">Deletable</button>
+      <span class="filter-sep">|</span>
+      <button class="filter-btn" data-filter="type:image">Images</button>
+      <button class="filter-btn" data-filter="type:text">Text</button>
+      <button class="filter-btn" data-filter="type:document">Documents</button>
+      <span class="filter-sep">|</span>
+      <input type="text" class="search-input" id="search" placeholder="Search filenames...">
+    </div>
+
+    <div class="file-info">
+      <div class="file-path" id="file-path">Loading...</div>
+      <div class="file-name" id="file-name"></div>
+      <div class="file-meta" id="file-meta"></div>
+    </div>
+
+    <div class="content-area" id="content-area">
+      <!-- Populated dynamically based on file type -->
+    </div>
+
+    <div class="categories">
+      <button class="cat-btn" data-cat="fragment">Fragment <kbd>1</kbd></button>
+      <button class="cat-btn" data-cat="idea">Idea <kbd>2</kbd></button>
+      <button class="cat-btn" data-cat="deliria">Deliria <kbd>3</kbd></button>
+      <button class="cat-btn" data-cat="desiderata">Desiderata <kbd>4</kbd></button>
+      <button class="cat-btn" data-cat="publishable">Publishable <kbd>5</kbd></button>
+      <button class="cat-btn" data-cat="reference">Reference <kbd>6</kbd></button>
+      <button class="cat-btn" data-cat="deletable">Deletable <kbd>0</kbd></button>
+    </div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="prev-btn">&larr; Prev <kbd>&larr;</kbd></button>
+      <button class="nav-btn" id="next-btn">Next &rarr; <kbd>&rarr;</kbd></button>
+      <input type="number" class="nav-input" id="goto-input" min="1" value="1">
+      <button class="nav-btn" id="goto-btn">Go</button>
+      <button class="nav-btn" id="next-uncat-btn">Next Uncategorized <kbd>Space</kbd></button>
+      <span class="spacer"></span>
+      <button class="log-toggle" id="log-toggle">History</button>
+      <button class="nav-btn export-btn" id="export-btn">Export JSON</button>
+    </div>
+
+    <div class="log-panel" id="log-panel"></div>
+  </main>
+
+  <script>
+    let data = null;
+    let filteredFiles = [];
+    let currentIndex = 0;
+    let entries = {}; // path -> { category, transcription, log[] }
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    const STORAGE_KEY = 'archive-triage-v2';
+    let saveTimeout = null;
+    let imageZoom = 1;
+
+    // --- Data format ---
+    // Each entry: { category: string|null, transcription: string|null, log: Array }
+    // Log entries: { action: string, value?: string, at: string }
+
+    function getEntry(filePath) {
+      if (!entries[filePath]) {
+        entries[filePath] = { category: null, transcription: null, log: [] };
+      }
+      return entries[filePath];
+    }
+
+    function addLogEntry(filePath, action, value) {
+      const entry = getEntry(filePath);
+      entry.log.push({
+        action,
+        ...(value !== undefined && { value }),
+        at: new Date().toISOString()
+      });
+    }
+
+    // --- Persistence ---
+
+    async function loadEntries() {
+      try {
+        const res = await fetch('/categories.json');
+        if (res.ok) {
+          const serverData = await res.json();
+          if (Object.keys(serverData).length > 0) {
+            // Server handles migration from old format
+            entries = serverData;
+            console.log(`Loaded ${Object.keys(entries).length} entries from server`);
+            return;
+          }
+        }
+      } catch (e) {}
+
+      // Fall back to localStorage
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          entries = JSON.parse(saved);
+          console.log(`Loaded ${Object.keys(entries).length} entries from localStorage`);
+          return;
+        }
+        // Try migrating from v1 localStorage
+        const v1 = localStorage.getItem('archive-triage-categories');
+        if (v1) {
+          const old = JSON.parse(v1);
+          for (const [path, cat] of Object.entries(old)) {
+            entries[path] = {
+              category: cat,
+              transcription: null,
+              log: [{ action: 'categorized', value: cat, at: new Date().toISOString(), note: 'migrated from v1' }]
+            };
+          }
+          console.log(`Migrated ${Object.keys(entries).length} entries from v1 localStorage`);
+        }
+      } catch (e) {}
+    }
+
+    function saveEntries() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      if (saveTimeout) clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(saveToServer, 500);
+    }
+
+    async function saveToServer() {
+      try {
+        const res = await fetch('/save-categories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(entries)
+        });
+        if (res.ok) {
+          console.log(`Saved ${Object.keys(entries).length} entries to server`);
+        }
+      } catch (e) {
+        console.warn('Could not save to server:', e);
+      }
+    }
+
+    // --- Filtering ---
+
+    function applyFilter() {
+      filteredFiles = data.files.filter(f => {
+        const entry = entries[f.path];
+        const cat = entry?.category;
+
+        let matchesFilter = false;
+        if (currentFilter === 'all') {
+          matchesFilter = true;
+        } else if (currentFilter === 'uncategorized') {
+          matchesFilter = !cat;
+        } else if (currentFilter.startsWith('type:')) {
+          matchesFilter = f.type === currentFilter.slice(5);
+        } else {
+          matchesFilter = cat === currentFilter;
+        }
+
+        const matchesSearch = !searchQuery ||
+          f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          f.path.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return matchesFilter && matchesSearch;
+      });
+
+      document.getElementById('current-filter').textContent =
+        `Showing: ${filteredFiles.length} ${currentFilter}${searchQuery ? ` matching "${searchQuery}"` : ''}`;
+
+      if (currentIndex >= filteredFiles.length) currentIndex = 0;
+    }
+
+    // --- Stats ---
+
+    function updateStats() {
+      const done = Object.values(entries).filter(e => e.category).length;
+      const total = data.files.length;
+      document.getElementById('done-count').textContent = done;
+      document.getElementById('total-count').textContent = total;
+      document.getElementById('progress').style.width = `${(done / total) * 100}%`;
+
+      if (data.counts) {
+        const c = data.counts;
+        document.getElementById('type-counts').textContent =
+          `${c.image || 0} img · ${c.text || 0} txt · ${c.document || 0} doc`;
+      }
+    }
+
+    // --- Rendering ---
+
+    function renderContentArea(file) {
+      const area = document.getElementById('content-area');
+      const entry = getEntry(file.path);
+      imageZoom = 1;
+
+      if (file.type === 'image') {
+        // Split pane: image left, transcription right
+        area.innerHTML = `
+          <div class="pane image-pane" id="image-pane">
+            <div class="pane-label">Scan</div>
+            <img id="scan-img" src="${encodeURI(file.path)}" alt="${file.name}"
+                 style="transform: scale(1); cursor: zoom-in;"
+                 onclick="cycleZoom()">
+            <div class="image-controls">
+              <button onclick="setZoom(0.5)">50%</button>
+              <button onclick="setZoom(1)">100%</button>
+              <button onclick="setZoom(1.5)">150%</button>
+              <button onclick="setZoom(2)">200%</button>
+              <span id="zoom-level">100%</span>
+            </div>
+          </div>
+          <div class="pane transcription-pane" id="transcription-pane">
+            <div class="pane-label">Transcription <kbd>T</kbd></div>
+            <textarea id="transcription"
+              placeholder="Type or paste transcription here...&#10;&#10;OCR output, manual transliteration, or notes about this scan."
+            >${entry.transcription || ''}</textarea>
+            <div class="transcription-status" id="transcription-status"></div>
+          </div>
+        `;
+        setupTranscriptionHandlers(file.path);
+      } else {
+        // Text/document: content left, transcription/notes right
+        const hasContent = !!file.content;
+        const showTranscription = !hasContent || entry.transcription;
+
+        if (showTranscription || file.type === 'document') {
+          // Split pane for documents without content, or any file with existing transcription
+          area.innerHTML = `
+            <div class="pane text-pane ${hasContent ? '' : 'no-content'}" id="text-content">
+              ${hasContent ? '' : '<div style="padding: 1rem;">'}
+              ${hasContent ? escapeHtml(file.content) : '[No preview — open original file]'}
+              ${hasContent ? '' : '</div>'}
+            </div>
+            <div class="pane transcription-pane" id="transcription-pane">
+              <div class="pane-label">Notes <kbd>T</kbd></div>
+              <textarea id="transcription"
+                placeholder="Notes, corrections, or alternate text..."
+              >${entry.transcription || ''}</textarea>
+              <div class="transcription-status" id="transcription-status"></div>
+            </div>
+          `;
+          setupTranscriptionHandlers(file.path);
+        } else {
+          // Simple single-pane text view
+          area.innerHTML = `
+            <div class="pane text-pane" style="flex: 1;">
+              ${escapeHtml(file.content)}
+            </div>
+          `;
+        }
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function setupTranscriptionHandlers(filePath) {
+      const textarea = document.getElementById('transcription');
+      const status = document.getElementById('transcription-status');
+      if (!textarea) return;
+
+      let typingTimeout = null;
+
+      textarea.addEventListener('input', () => {
+        status.textContent = 'unsaved';
+        status.className = 'transcription-status saving';
+
+        if (typingTimeout) clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+          const entry = getEntry(filePath);
+          const oldText = entry.transcription;
+          const newText = textarea.value.trim() || null;
+          entry.transcription = newText;
+
+          if (oldText !== newText) {
+            addLogEntry(filePath, 'transcription_updated');
+          }
+
+          saveEntries();
+          status.textContent = 'saved';
+          status.className = 'transcription-status saved';
+        }, 800);
+      });
+    }
+
+    // --- Image zoom ---
+
+    function setZoom(level) {
+      imageZoom = level;
+      const img = document.getElementById('scan-img');
+      if (img) {
+        img.style.transform = `scale(${level})`;
+        img.style.transformOrigin = 'top center';
+      }
+      const indicator = document.getElementById('zoom-level');
+      if (indicator) indicator.textContent = `${Math.round(level * 100)}%`;
+    }
+
+    function cycleZoom() {
+      const levels = [1, 1.5, 2, 0.5];
+      const next = levels[(levels.indexOf(imageZoom) + 1) % levels.length];
+      setZoom(next || 1);
+    }
+
+    // --- Main render ---
+
+    function render() {
+      if (!filteredFiles.length) {
+        document.getElementById('file-path').textContent = 'No files match filter';
+        document.getElementById('file-name').textContent = '';
+        document.getElementById('file-meta').textContent = '';
+        document.getElementById('content-area').innerHTML =
+          '<div class="pane text-pane no-content" style="flex:1">No matching files</div>';
+        return;
+      }
+
+      const file = filteredFiles[currentIndex];
+      const entry = entries[file.path];
+      const cat = entry?.category;
+
+      document.getElementById('file-path').textContent =
+        `${currentIndex + 1} / ${filteredFiles.length} — ${file.path}`;
+
+      let nameHtml = file.name;
+      nameHtml += `<span class="type-badge ${file.type}">${file.type}</span>`;
+      document.getElementById('file-name').innerHTML = nameHtml;
+
+      let meta = `${file.ext} · ${(file.size / 1024).toFixed(1)} KB`;
+      if (file.modified) meta += ` · ${new Date(file.modified).toLocaleDateString()}`;
+      if (file.convertedFrom) meta += ` · converted from ${file.convertedFrom}`;
+      if (cat) meta += ` · ${cat.toUpperCase()}`;
+      if (entry?.transcription) meta += ` · has transcription`;
+      document.getElementById('file-meta').textContent = meta;
+
+      renderContentArea(file);
+
+      // Update category buttons
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.cat === cat);
+      });
+
+      // Update nav buttons
+      document.getElementById('prev-btn').disabled = currentIndex === 0;
+      document.getElementById('next-btn').disabled = currentIndex >= filteredFiles.length - 1;
+      document.getElementById('goto-input').value = currentIndex + 1;
+      document.getElementById('goto-input').max = filteredFiles.length;
+
+      // Update log panel
+      renderLog(file.path);
+
+      updateStats();
+    }
+
+    // --- Log panel ---
+
+    function renderLog(filePath) {
+      const panel = document.getElementById('log-panel');
+      const entry = entries[filePath];
+      const log = entry?.log || [];
+
+      if (!log.length) {
+        panel.innerHTML = '<div class="log-entry" style="color: var(--text-muted)">No history for this file</div>';
+        return;
+      }
+
+      panel.innerHTML = log.slice().reverse().map(l => {
+        const time = new Date(l.at).toLocaleString();
+        const value = l.value ? ` → ${l.value}` : '';
+        const note = l.note ? ` (${l.note})` : '';
+        return `<div class="log-entry">
+          <span class="log-time">${time}</span>
+          <span class="log-action">${l.action}</span>${value}${note}
+        </div>`;
+      }).join('');
+    }
+
+    // --- Actions ---
+
+    function setCategory(cat) {
+      if (!filteredFiles.length) return;
+      const file = filteredFiles[currentIndex];
+      const entry = getEntry(file.path);
+
+      if (entry.category === cat) {
+        addLogEntry(file.path, 'uncategorized', cat);
+        entry.category = null;
+      } else {
+        addLogEntry(file.path, 'categorized', cat);
+        entry.category = cat;
+      }
+
+      saveEntries();
+      render();
+    }
+
+    function navigate(delta) {
+      currentIndex = Math.max(0, Math.min(filteredFiles.length - 1, currentIndex + delta));
+      render();
+    }
+
+    function goToIndex(idx) {
+      currentIndex = Math.max(0, Math.min(filteredFiles.length - 1, idx));
+      render();
+    }
+
+    function nextUncategorized() {
+      for (let i = currentIndex + 1; i < filteredFiles.length; i++) {
+        if (!entries[filteredFiles[i].path]?.category) {
+          currentIndex = i;
+          render();
+          return;
+        }
+      }
+      for (let i = 0; i < currentIndex; i++) {
+        if (!entries[filteredFiles[i].path]?.category) {
+          currentIndex = i;
+          render();
+          return;
+        }
+      }
+      alert('All files in current filter are categorized!');
+    }
+
+    function focusTranscription() {
+      const textarea = document.getElementById('transcription');
+      if (textarea) {
+        textarea.focus();
+      } else {
+        // If no transcription pane visible, re-render with one
+        if (filteredFiles.length) {
+          const file = filteredFiles[currentIndex];
+          getEntry(file.path); // ensure entry exists
+          render();
+          setTimeout(() => {
+            const ta = document.getElementById('transcription');
+            if (ta) ta.focus();
+          }, 50);
+        }
+      }
+    }
+
+    function toggleLog() {
+      const panel = document.getElementById('log-panel');
+      panel.classList.toggle('open');
+    }
+
+    function exportJSON() {
+      const output = {
+        exported: new Date().toISOString(),
+        totalFiles: data.files.length,
+        categorized: Object.values(entries).filter(e => e.category).length,
+        transcribed: Object.values(entries).filter(e => e.transcription).length,
+        entries,
+        byCategoryCount: {},
+        byTypeCount: data.counts || {}
+      };
+
+      for (const entry of Object.values(entries)) {
+        if (entry.category) {
+          output.byCategoryCount[entry.category] = (output.byCategoryCount[entry.category] || 0) + 1;
+        }
+      }
+
+      const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `archive-triage-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // --- Event listeners ---
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => setCategory(btn.dataset.cat));
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilter();
+        render();
+      });
+    });
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      applyFilter();
+      render();
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => navigate(-1));
+    document.getElementById('next-btn').addEventListener('click', () => navigate(1));
+    document.getElementById('goto-btn').addEventListener('click', () => {
+      goToIndex(parseInt(document.getElementById('goto-input').value) - 1);
+    });
+    document.getElementById('goto-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') goToIndex(parseInt(e.target.value) - 1);
+    });
+    document.getElementById('next-uncat-btn').addEventListener('click', nextUncategorized);
+    document.getElementById('export-btn').addEventListener('click', exportJSON);
+    document.getElementById('log-toggle').addEventListener('click', toggleLog);
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Let typing in inputs/textareas work normally
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        // Escape leaves the input
+        if (e.key === 'Escape') e.target.blur();
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowLeft': navigate(-1); break;
+        case 'ArrowRight': navigate(1); break;
+        case ' ': e.preventDefault(); nextUncategorized(); break;
+        case '1': setCategory('fragment'); break;
+        case '2': setCategory('idea'); break;
+        case '3': setCategory('deliria'); break;
+        case '4': setCategory('desiderata'); break;
+        case '5': setCategory('publishable'); break;
+        case '6': setCategory('reference'); break;
+        case '0': setCategory('deletable'); break;
+        case 't': case 'T': focusTranscription(); break;
+        case 'h': case 'H': toggleLog(); break;
+      }
+    });
+
+    // --- Init ---
+
+    loadEntries().then(() => {
+      fetch('file-index.json')
+      .then(r => r.json())
+      .then(d => {
+        data = d;
+        applyFilter();
+        render();
+      })
+      .catch(err => {
+        document.getElementById('content-area').innerHTML =
+          '<div class="pane text-pane no-content" style="flex:1">Error loading file-index.json. Run: node generate-index.js</div>';
+      });
+    });
+  </script>
+</body>
+</html>

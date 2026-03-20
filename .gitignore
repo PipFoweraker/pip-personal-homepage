@@ -25,5 +25,17 @@ yarn-error.log*
 .env.local
 .env.*.local
 
-# Review staging area (personal archive triage)
-review/
+# Review triage — private data (scans, state, index, archive files)
+review/categories.json
+review/file-index.json
+review/scans/
+review/from-*/
+
+# Claude Code local settings
+.claude/
+
+# Private working notes for drafts (TODOs, development notes, thinking)
+working-notes/
+
+# Import data and conversion scripts (contains raw dumps, session tokens)
+pph-dump/
