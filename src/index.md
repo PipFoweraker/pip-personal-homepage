@@ -19,7 +19,13 @@ I build institutions, write occasionally, and work to help humanity navigate the
 
 ## Recent Writing
 
-*Coming soon - essays will appear here as they're published.*
+{% if collections.essays.length > 0 %}
+{% for essay in collections.essays | reverse %}
+- [{{ essay.data.title }}]({{ essay.url }}){% if essay.data.description %} — {{ essay.data.description }}{% endif %}
+{% endfor %}
+{% else %}
+*Coming soon.*
+{% endif %}
 
 ## Connect
 

@@ -147,6 +147,10 @@ main {
     main {
         max-width: calc(var(--content-max-width) + var(--sidenote-width) + var(--sidenote-gap) + 2 * var(--content-padding));
     }
+
+    .site-header-inner {
+        max-width: calc(var(--content-max-width) + var(--sidenote-width) + var(--sidenote-gap));
+    }
 }
 
 article {
@@ -746,4 +750,187 @@ blockquote::before {
     color: var(--color-accent);
     opacity: 0.5;
     font-size: 1.2em;
+}
+
+/* ==================== */
+/* BETA COLLECTION      */
+/* ==================== */
+
+.beta-progress {
+    margin: var(--space-lg) 0;
+}
+
+.beta-progress-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.beta-progress-bar {
+    height: 8px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.beta-progress-bar-sm {
+    flex: 1;
+    height: 6px;
+    margin: 0 var(--space-sm);
+}
+
+.beta-progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    min-width: 1px;
+}
+
+.beta-color-bars {
+    margin: var(--space-lg) 0 var(--space-xl) 0;
+}
+
+.beta-color-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-small);
+}
+
+.beta-color-label {
+    width: 5em;
+    color: var(--color-text-muted);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.beta-color-count {
+    width: 3.5em;
+    color: var(--color-text-faint);
+    font-size: var(--font-size-tiny);
+    flex-shrink: 0;
+}
+
+.beta-cards {
+    list-style: none;
+    padding: 0;
+    columns: 2;
+    column-gap: var(--space-xl);
+}
+
+@media (max-width: 649px) {
+    .beta-cards {
+        columns: 1;
+    }
+}
+
+.beta-cards li {
+    padding: 2px 0;
+    font-size: var(--font-size-small);
+    break-inside: avoid;
+}
+
+.beta-cards .have {
+    color: var(--color-text-faint);
+}
+
+.beta-cards .have .beta-card-name::before {
+    content: "\2713\2009";
+    color: var(--color-accent);
+}
+
+.beta-cards .need .beta-card-name::before {
+    content: "\2009\2009\2009";
+}
+
+.beta-rarity {
+    font-size: var(--font-size-tiny);
+    color: var(--color-text-faint);
+    margin-left: 0.25em;
+}
+
+.beta-type {
+    font-size: var(--font-size-tiny);
+    color: var(--color-text-faint);
+    margin-left: 0.5em;
+}
+
+.beta-type::before {
+    content: "\2014\2009";
+}
+
+.beta-note {
+    display: block;
+    font-size: var(--font-size-tiny);
+    color: var(--color-text-faint);
+    font-style: italic;
+    margin-left: 1.2em;
+}
+
+.beta-warning {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg-alt);
+    border-left: 3px solid var(--color-accent);
+    margin: var(--space-md) 0;
+    font-size: var(--font-size-small);
+}
+
+/* ==================== */
+/* PROJECT SHOWCASE     */
+/* ==================== */
+
+.project-card {
+    margin: var(--space-md) 0 var(--space-lg) 0;
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.project-card:last-child {
+    border-bottom: none;
+}
+
+.project-card h3 {
+    margin: 0 0 var(--space-xs) 0;
+    font-size: 1.15em;
+}
+
+.project-card p {
+    margin: var(--space-sm) 0 0 0;
+}
+
+.project-role {
+    font-size: var(--font-size-small);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.project-status {
+    display: inline-block;
+    font-size: var(--font-size-tiny);
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+
+.project-status.active {
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+}
+
+.project-status.experimental {
+    color: var(--color-text-faint);
+    border: 1px solid var(--color-border);
+}
+
+.project-status.archived {
+    color: var(--color-text-faint);
+    border: 1px solid var(--color-border-light);
 }

@@ -67,8 +67,10 @@ module.exports = function(eleventyConfig) {
       .slice(0, 20);
   });
 
-  // Markdown configuration for sidenotes
+  // Markdown configuration with sidenotes
   let markdownIt = require("markdown-it");
+  let footnotePlugin = require("markdown-it-footnote");
+
   let md = markdownIt({
     html: true,
     breaks: false,
@@ -76,9 +78,70 @@ module.exports = function(eleventyConfig) {
     typographer: true
   });
 
-  // Custom sidenote syntax: [^note] becomes sidenote
-  // We'll enhance this later with proper sidenote support
+  md.use(footnotePlugin);
+
+  // Override footnote rendering to produce sidenote markup
+  // Sidenote ref: superscript number inline
+  let sidenoteIndex = 0;
+
+  md.renderer.rules.footnote_ref = function(tokens, idx, options, env) {
+    let id = tokens[idx].meta.id;
+    let n = id + 1;
+    return '<sup class="sidenote-ref" id="fnref' + id + '">' + n + '</sup>';
+  };
+
+  // Sidenote block open: start the sidenote container
+  md.renderer.rules.footnote_block_open = function() {
+    return '<div class="sidenotes-footer">\n';
+  };
+
+  md.renderer.rules.footnote_block_close = function() {
+    return '</div>\n';
+  };
+
+  md.renderer.rules.footnote_open = function(tokens, idx, options, env) {
+    let id = tokens[idx].meta.id;
+    let n = id + 1;
+    return '<aside class="sidenote" id="fn' + id + '"><sup>' + n + '</sup> ';
+  };
+
+  md.renderer.rules.footnote_close = function() {
+    return '</aside>\n';
+  };
+
+  md.renderer.rules.footnote_anchor = function() {
+    // No back-arrow needed for sidenotes
+    return '';
+  };
+
   eleventyConfig.setLibrary("md", md);
+
+  // Transform: move sidenotes from footer to inline after their references
+  eleventyConfig.addTransform("inlineSidenotes", function(content, outputPath) {
+    if (!outputPath || !outputPath.endsWith(".html")) return content;
+    if (!content.includes("sidenotes-footer")) return content;
+
+    // Extract each sidenote from the footer
+    const sidenoteRegex = /<aside class="sidenote" id="fn(\d+)">([\s\S]*?)<\/aside>/g;
+    const sidenotes = {};
+    let match;
+    while ((match = sidenoteRegex.exec(content)) !== null) {
+      sidenotes[match[1]] = match[0];
+    }
+
+    // Remove the sidenotes footer block
+    content = content.replace(/<div class="sidenotes-footer">[\s\S]*?<\/div>\n?/, '');
+
+    // Insert each sidenote right after the paragraph containing its reference
+    for (const [id, sidenoteHtml] of Object.entries(sidenotes)) {
+      const refPattern = new RegExp(
+        '(<sup class="sidenote-ref" id="fnref' + id + '">[\\s\\S]*?</p>)'
+      );
+      content = content.replace(refPattern, '$1\n' + sidenoteHtml);
+    }
+
+    return content;
+  });
 
   return {
     dir: {

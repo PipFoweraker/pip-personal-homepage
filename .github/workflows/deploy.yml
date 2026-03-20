@@ -28,6 +28,23 @@ jobs:
       - name: Build site
         run: npx @11ty/eleventy
 
+      - name: Integrate world-narrative
+        run: |
+          git clone --depth 1 https://github.com/PipFoweraker/world-narrative.git /tmp/world-narrative
+          mkdir -p _site/world-narrative
+          cp -r /tmp/world-narrative/site _site/world-narrative/site
+          cp -r /tmp/world-narrative/models _site/world-narrative/models
+          cp /tmp/world-narrative/README.md _site/world-narrative/README.md
+          # Redirect /world-narrative/ to /world-narrative/site/
+          cat > _site/world-narrative/index.html << 'REDIRECT'
+          <!DOCTYPE html>
+          <html><head>
+          <meta http-equiv="refresh" content="0;url=site/">
+          <link rel="canonical" href="/world-narrative/site/">
+          </head><body><a href="site/">World Narrative</a></body></html>
+          REDIRECT
+          rm -rf /tmp/world-narrative
+
       - name: Verify build output
         run: |
           test -f _site/index.html || (echo "Build failed: no _site/index.html" && exit 1)

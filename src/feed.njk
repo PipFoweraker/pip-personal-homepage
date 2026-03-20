@@ -21,7 +21,7 @@
     <link href="https://pipfoweraker.com{{ item.url }}"/>
     <updated>{{ item.date | dateToRfc3339 }}</updated>
     <id>https://pipfoweraker.com{{ item.url }}</id>
-    <content type="html">{{ item.templateContent | htmlToAbsoluteUrl("https://pipfoweraker.com" + item.url) }}</content>
+    <content type="html">{{ item.templateContent | safe }}</content>
   </entry>
   {%- endfor %}
 </feed>
