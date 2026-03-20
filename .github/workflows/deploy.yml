@@ -27,14 +27,20 @@ jobs:
 
       - name: Build site
         run: npx @11ty/eleventy
+        env:
+          NODE_ENV: production
 
       - name: Integrate world-narrative
         run: |
+          echo "::group::Clone world-narrative"
           git clone --depth 1 https://github.com/PipFoweraker/world-narrative.git /tmp/world-narrative
+          echo "::endgroup::"
+
           mkdir -p _site/world-narrative
           cp -r /tmp/world-narrative/site _site/world-narrative/site
           cp -r /tmp/world-narrative/models _site/world-narrative/models
           cp /tmp/world-narrative/README.md _site/world-narrative/README.md
+
           # Redirect /world-narrative/ to /world-narrative/site/
           cat > _site/world-narrative/index.html << 'REDIRECT'
           <!DOCTYPE html>
@@ -43,15 +49,56 @@ jobs:
           <link rel="canonical" href="/world-narrative/site/">
           </head><body><a href="site/">World Narrative</a></body></html>
           REDIRECT
+
           rm -rf /tmp/world-narrative
+          echo "world-narrative integrated: $(find _site/world-narrative -type f | wc -l) files"
 
       - name: Verify build output
         run: |
-          test -f _site/index.html || (echo "Build failed: no _site/index.html" && exit 1)
-          echo "Build output:"
-          find _site -type f | head -30
-          echo "---"
-          echo "Total files: $(find _site -type f | wc -l)"
+          FAIL=0
+
+          # Core pages that must exist
+          for page in index.html about/index.html projects/index.html essays/index.html contact/index.html; do
+            if [ ! -f "_site/$page" ]; then
+              echo "::error::Missing required page: _site/$page"
+              FAIL=1
+            fi
+          done
+
+          # Plausible analytics must be present in the base layout
+          if ! grep -q 'plausible.io/js/script.js' _site/index.html; then
+            echo "::error::Plausible analytics script missing from index.html"
+            FAIL=1
+          fi
+
+          # RSS feed must exist and be valid XML
+          if [ ! -f "_site/feed.xml" ]; then
+            echo "::error::RSS feed missing"
+            FAIL=1
+          fi
+
+          # World narrative must have been integrated
+          if [ ! -f "_site/world-narrative/site/index.html" ]; then
+            echo "::error::world-narrative integration failed — site/index.html missing"
+            FAIL=1
+          fi
+          if [ ! -f "_site/world-narrative/models/events.json" ]; then
+            echo "::error::world-narrative integration failed — events.json missing"
+            FAIL=1
+          fi
+
+          # Summary
+          TOTAL=$(find _site -type f | wc -l)
+          echo "Build output: $TOTAL files"
+          echo "::group::File listing"
+          find _site -type f | sort
+          echo "::endgroup::"
+
+          if [ "$FAIL" -ne 0 ]; then
+            echo "::error::Build verification failed"
+            exit 1
+          fi
+          echo "Build verification passed"
 
       - name: Setup SSH
         run: |
@@ -74,10 +121,43 @@ jobs:
 
       - name: Verify deployment
         run: |
-          sleep 5
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://pipfoweraker.com)
-          echo "Site returned HTTP $STATUS"
+          FAIL=0
+
+          # Follow redirects, check final status
+          STATUS=$(curl -sL -o /dev/null -w "%{http_code}" https://pipfoweraker.com)
+          FINAL_URL=$(curl -sL -o /dev/null -w "%{url_effective}" https://pipfoweraker.com)
+          echo "https://pipfoweraker.com → $FINAL_URL (HTTP $STATUS)"
+
           if [ "$STATUS" -ge 400 ]; then
-            echo "Warning: site returned error status"
+            echo "::error::Homepage returned HTTP $STATUS"
+            FAIL=1
+          fi
+
+          # Verify Plausible script is actually in the served HTML
+          if ! curl -sL https://www.pipfoweraker.com/ | grep -q 'plausible.io/js/script.js'; then
+            echo "::warning::Plausible analytics script not found in served HTML"
+          fi
+
+          # Spot-check key pages
+          for path in about/ projects/ essays/ contact/ feed.xml; do
+            PAGE_STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "https://www.pipfoweraker.com/$path")
+            if [ "$PAGE_STATUS" -ge 400 ]; then
+              echo "::error::/$path returned HTTP $PAGE_STATUS"
+              FAIL=1
+            else
+              echo "/$path → HTTP $PAGE_STATUS"
+            fi
+          done
+
+          # Check world-narrative
+          WN_STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "https://www.pipfoweraker.com/world-narrative/")
+          echo "/world-narrative/ → HTTP $WN_STATUS"
+          if [ "$WN_STATUS" -ge 400 ]; then
+            echo "::warning::world-narrative not accessible (may be first deploy)"
+          fi
+
+          if [ "$FAIL" -ne 0 ]; then
+            echo "::error::Post-deploy verification failed"
             exit 1
           fi
+          echo "Deployment verified successfully"

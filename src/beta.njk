@@ -1,0 +1,93 @@
+---
+layout: base.njk
+title: Beta Collection
+description: "Tracking my progress toward a complete Limited Edition Beta set of Magic: the Gathering."
+permalink: /beta/
+---
+
+<article>
+    <h1>Beta Collection</h1>
+
+    <p>
+        I'm working toward a complete <em>Limited Edition Beta</em> set of <em>Magic: the Gathering</em>,
+        and I'd rather trade my way there than buy my way there. If you see something on my want list
+        that you can help with, <a href="/contact/">get in touch</a>.
+    </p>
+
+    <div class="beta-progress">
+        <div class="beta-progress-stats">
+            <span class="beta-stat">{{ beta.owned }}&thinsp;/&thinsp;{{ beta.total }} cards</span>
+            <span class="beta-stat">{{ beta.percent }}% complete</span>
+        </div>
+        <div class="beta-progress-bar">
+            <div class="beta-progress-fill" style="width: {{ beta.percent }}%"></div>
+        </div>
+    </div>
+
+    <div class="beta-color-bars">
+        {% for color in beta.colorOrder %}
+        {% set stats = beta.colorStats[color] %}
+        <div class="beta-color-row">
+            <span class="beta-color-label">{{ beta.colorLabels[color] }}</span>
+            <div class="beta-progress-bar beta-progress-bar-sm">
+                <div class="beta-progress-fill" style="width: {{ stats.percent }}%"></div>
+            </div>
+            <span class="beta-color-count">{{ stats.owned }}/{{ stats.total }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if beta.unrecognized.length > 0 %}
+    <div class="beta-warning">
+        <strong>Warning:</strong> unrecognized card names in your data file:
+        {{ beta.unrecognized | join(", ") }}.
+        Check for typos in <code>src/_data/beta.js</code>.
+    </div>
+    {% endif %}
+
+    <h2>Want List</h2>
+
+    <p class="text-muted text-small">{{ beta.needed }} cards remaining. Last updated {{ beta.lastUpdated }}.</p>
+
+    {% for r in ["R", "U", "C"] %}
+    {% set rCards = beta.neededByRarity[r] %}
+    {% if rCards.length > 0 %}
+    <h3>{{ beta.rarityLabels[r] }} <span class="text-muted text-small">({{ rCards.length }})</span></h3>
+    <ul class="beta-cards">
+        {% for card in rCards %}
+        <li>{{ card.name }}<span class="beta-type">{{ card.type }}</span></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+
+    {% if beta.tradeable.length > 0 %}
+    <h2>For Trade</h2>
+    <p class="text-muted text-small">Beta cards I have extras of.</p>
+    <ul class="beta-cards">
+        {% for card in beta.tradeable %}
+        <li>{{ card.name }}{% if card.note %}<span class="beta-note">{{ card.note }}</span>{% endif %}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Full Set</h2>
+
+    {% for color in beta.colorOrder %}
+    {% set colorCards = beta.byColor[color] %}
+    {% set stats = beta.colorStats[color] %}
+    <details{% if stats.needed > 0 %} open{% endif %}>
+        <summary>{{ beta.colorLabels[color] }} &mdash; {{ stats.owned }}/{{ stats.total }}</summary>
+        <ul class="beta-cards">
+            {% for card in colorCards %}
+            <li class="{% if card.have %}have{% else %}need{% endif %}">
+                <span class="beta-card-name">{{ card.name }}</span>
+                <span class="beta-rarity">{{ card.rarity }}</span>
+                {% if card.note %}<span class="beta-note">{{ card.note }}</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </details>
+    {% endfor %}
+
+</article>

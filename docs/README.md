@@ -15,13 +15,16 @@ npm run build        # Production build to _site/
 ```
 src/
     _data/           # Global data files
+        beta.js      # Beta collection tracker + card database
     _includes/       # Templates and layouts
         base.njk     # Base HTML template
         essay.njk    # Essay page template
+        note.njk     # Note page template
     assets/          # Static files (CSS, JS, images)
     essays/          # Published essays
         drafts/      # Draft essays (unlisted)
-    *.md             # Page content
+    notes/           # Short-form notes
+    *.md, *.njk      # Page content
 
 scripts/             # CLI tools
     stage-essay.sh   # Stage essay from ~/Writing/essays/
@@ -43,6 +46,17 @@ Essays follow a non-destructive staging workflow:
 4. Publish: `npm run publish-essay essay-name`
 
 See [ESSAYS.md](./ESSAYS.md) for full documentation.
+
+### Beta Collection
+
+The `/beta/` page tracks progress toward a complete Limited Edition Beta set of Magic: the Gathering. Card data lives in `src/_data/beta.js`:
+
+- **Uncomment card names** in the `have` array as you acquire them
+- **Add card names** to `forTrade` for extras available for trading
+- **Add notes** to `cardNotes` for condition, provenance, etc.
+- **Update `lastUpdated`** when you change the collection
+
+The card database (292 unique cards + 10 basic land art variants = 302 total) is sourced from Scryfall and stored in the same file below the user-editable section.
 
 ### Pages
 
@@ -126,4 +140,5 @@ Eleventy configuration is in `.eleventy.js`:
 - Passthrough copies for assets
 - Custom filters (date formatting, slugify, startsWith)
 - Markdown-it configuration
-- Collections (essays, drafts)
+- Collections (essays, drafts, notes)
+- Data files (`beta.js` for collection tracking)

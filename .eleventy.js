@@ -58,6 +58,16 @@ module.exports = function(eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Reading collection (saved articles from Feedly)
+  eleventyConfig.addCollection("reading", (collection) => {
+    return collection.getFilteredByGlob("src/reading/*.md")
+      .sort((a, b) => {
+        const aDate = a.data.saved ? new Date(a.data.saved) : a.date;
+        const bDate = b.data.saved ? new Date(b.data.saved) : b.date;
+        return bDate - aDate;
+      });
+  });
+
   // Combined feed collection (essays + notes, most recent 20)
   eleventyConfig.addCollection("feed", (collection) => {
     const essays = collection.getFilteredByGlob("src/essays/*.md");
