@@ -29,6 +29,7 @@ if [ -f "$DEST" ]; then
         echo "Aborted."
         exit 1
     fi
+    bash scripts/snapshot.sh "$ESSAY_NAME"
 fi
 
 cp "$SOURCE" "$DEST"

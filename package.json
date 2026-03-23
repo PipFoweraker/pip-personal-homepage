@@ -8,7 +8,8 @@
     "build": "npx @11ty/eleventy",
     "debug": "DEBUG=Eleventy* npx @11ty/eleventy",
     "stage": "bash scripts/stage-essay.sh",
-    "publish-essay": "bash scripts/publish-essay.sh"
+    "publish-essay": "bash scripts/publish-essay.sh",
+    "snapshot": "bash scripts/snapshot.sh"
   },
   "keywords": [
     "personal-site",
